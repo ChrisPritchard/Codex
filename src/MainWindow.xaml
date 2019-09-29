@@ -6,11 +6,51 @@
         xmlns:local="clr-namespace:Codex"
         mc:Ignorable="d"
         Title="Codex" Height="800" Width="600" WindowStyle="None">
+    <Window.Resources>
+        <Style x:Key="FadeOutButton" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="Transparent">
+                            <ContentPresenter/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <EventTrigger RoutedEvent="Control.MouseEnter">
+                    <BeginStoryboard>
+                        <Storyboard >
+                            <DoubleAnimation Duration="0:0:0.2" To="1" Storyboard.TargetProperty="Opacity"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="Control.MouseLeave">
+                    <BeginStoryboard>
+                        <Storyboard >
+                            <DoubleAnimation Duration="0:0:0.2" To="0.4" Storyboard.TargetProperty="Opacity"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
     <Grid>
+        <Button
+                Style="{StaticResource FadeOutButton}" 
+                Click="Button_Click" 
+                Opacity="0.4" 
+                Width="30" Height="30" 
+                HorizontalAlignment="Right" 
+                VerticalAlignment="Top"                 
+                Margin="0,10,10,0">
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock Text="X" TextAlignment="Center"></TextBlock></StackPanel>
+        </Button>
         <RichTextBox x:Name="richTextBox" 
                      Margin="100,50,100,50" 
                      BorderThickness="0" 
-                     SpellCheck.IsEnabled="True" TextChanged="RichTextBox_TextChanged">
+                     SpellCheck.IsEnabled="True" >
             <FlowDocument FontFamily="Arial" FontSize="16" LineHeight="24" />
         </RichTextBox>
     </Grid>

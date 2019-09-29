@@ -10,5 +10,10 @@ namespace Codex
             InitializeComponent();
             richTextBox.Focus();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            App.Current.Shutdown();
+        }
     }
 }
