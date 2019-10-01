@@ -1,5 +1,7 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 
 namespace Codex
 {
@@ -8,12 +10,18 @@ namespace Codex
         public MainWindow()
         {
             InitializeComponent();
-            richTextBox.Focus();
+            MainText.Focus();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Exit_Click(object sender, RoutedEventArgs e) => Application.Current.Shutdown();
+
+        private void MainText_TextChanged(object sender, TextChangedEventArgs e)
         {
-            App.Current.Shutdown();
+            if (WordCount == null)
+                return;
+            var range = new TextRange(MainText.Document.ContentStart, MainText.Document.ContentEnd);
+            var wordCount = range.Text.Split(' ', StringSplitOptions.RemoveEmptyEntries).Length;
+            WordCount.Text = $"{wordCount} words";
         }
     }
 }

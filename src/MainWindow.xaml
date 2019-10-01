@@ -7,16 +7,7 @@
         mc:Ignorable="d"
         Title="Codex" Height="800" Width="600" WindowStyle="None">
     <Window.Resources>
-        <Style x:Key="FadeOutButton" TargetType="{x:Type Button}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="Transparent">
-                            <ContentPresenter/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
+        <Style x:Key="FadeFocus" TargetType="{x:Type FrameworkElement}">
             <Style.Triggers>
                 <EventTrigger RoutedEvent="Control.MouseEnter">
                     <BeginStoryboard>
@@ -37,22 +28,36 @@
     </Window.Resources>
     <Grid>
         <Button
-                Style="{StaticResource FadeOutButton}" 
-                Click="Button_Click" 
+                Style="{StaticResource FadeFocus}" 
+                Click="Exit_Click" 
                 Opacity="0.4" 
                 Width="30" Height="30" 
                 HorizontalAlignment="Right" 
                 VerticalAlignment="Top"                 
                 Margin="0,0,0,0">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="Transparent">
+                        <ContentPresenter/>
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
             <StackPanel VerticalAlignment="Center">
                 <TextBlock Text="X" TextAlignment="Center" FontSize="16" FontWeight="Bold" />
             </StackPanel>
         </Button>
-        <RichTextBox x:Name="richTextBox" 
-                     Margin="100,50,100,50" 
+        <RichTextBox x:Name="MainText" 
+                     Margin="50,50,50,50" 
                      BorderThickness="0" 
-                     SpellCheck.IsEnabled="True" >
+                     SpellCheck.IsEnabled="True" TextChanged="MainText_TextChanged" >
             <FlowDocument FontFamily="Arial" FontSize="16" LineHeight="24" />
         </RichTextBox>
+        <TextBlock x:Name="WordCount"
+                   Style="{StaticResource FadeFocus}" 
+                   Opacity="0.4"
+                   HorizontalAlignment="Left" 
+                   VerticalAlignment="Bottom"
+                   Margin="5"
+                   Text="0 words" />
     </Grid>
 </Window>
