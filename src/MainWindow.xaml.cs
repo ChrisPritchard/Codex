@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -13,7 +14,14 @@ namespace Codex
             MainText.Focus();
         }
 
-        private void Save_Click(object sender, RoutedEventArgs e) => Application.Current.Shutdown();
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new SaveFileDialog { Filter = "RTF (*.rtf)|*.rtf|Plain Text (*.txt)|*.txt|XAML Pack (*.xaml)|*.xaml" };
+            if (dialog.ShowDialog() != true)
+                return;
+
+            var fileName = dialog.FileName;
+        }
 
         private void Load_Click(object sender, RoutedEventArgs e) => Application.Current.Shutdown();
 
