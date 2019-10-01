@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -14,16 +15,38 @@ namespace Codex
             MainText.Focus();
         }
 
+        private const string fileFilters = "RTF (*.rtf)|*.rtf|Plain Text (*.txt)|*.txt|XAML Pack (*.xaml)|*.xaml";
+
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new SaveFileDialog { Filter = "RTF (*.rtf)|*.rtf|Plain Text (*.txt)|*.txt|XAML Pack (*.xaml)|*.xaml" };
+            var dialog = new SaveFileDialog { Filter = fileFilters };
+            if (dialog.ShowDialog() != true)
+                return;
+
+            var fileName = dialog.FileName;
+            var type = DataFormatForExtension(Path.GetExtension(fileName));
+
+            var range = new TextRange(MainText.Document.ContentStart, MainText.Document.ContentEnd);
+            using var stream = File.Create(fileName);
+            range.Save(stream, type);
+        }
+
+        private string DataFormatForExtension(string extension) =>
+            extension switch
+            {
+                ".txt" => DataFormats.Text,
+                ".rtf" => DataFormats.Rtf,
+                _ => DataFormats.Xaml,
+            };
+
+        private void Load_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new OpenFileDialog { Filter = fileFilters };
             if (dialog.ShowDialog() != true)
                 return;
 
             var fileName = dialog.FileName;
         }
-
-        private void Load_Click(object sender, RoutedEventArgs e) => Application.Current.Shutdown();
 
         private void Exit_Click(object sender, RoutedEventArgs e) => Application.Current.Shutdown();
 
