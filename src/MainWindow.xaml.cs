@@ -13,6 +13,10 @@ namespace Codex
             MainText.Focus();
         }
 
+        private void Save_Click(object sender, RoutedEventArgs e) => Application.Current.Shutdown();
+
+        private void Load_Click(object sender, RoutedEventArgs e) => Application.Current.Shutdown();
+
         private void Exit_Click(object sender, RoutedEventArgs e) => Application.Current.Shutdown();
 
         private void MainText_TextChanged(object sender, TextChangedEventArgs e)
