@@ -9,26 +9,28 @@ namespace Codex
 {
     public partial class MainWindow : Window
     {
+        private const string fileFilters = "RTF (*.rtf)|*.rtf|Plain Text (*.txt)|*.txt|XAML Pack (*.xaml)|*.xaml";
+        private bool textDirty = false;
+
         public MainWindow()
         {
             InitializeComponent();
             MainText.Focus();
 
-            Application.Current.Exit += Current_Exit;
+            Closing += MainWindow_Closing;
         }
 
-        private void Current_Exit(object sender, ExitEventArgs e)
+        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (!textHasChanged)
+            if (!textDirty)
                 return;
-            var result = MessageBox.Show("Text has been changed. Would you like to save?", "Text has changed", MessageBoxButton.YesNo);
-            if (result == MessageBoxResult.Yes)
+
+            var result = MessageBox.Show("Text has been changed. Would you like to save?", "Text has changed", MessageBoxButton.YesNoCancel);
+            if (result == MessageBoxResult.Cancel)
+                e.Cancel = true;
+            else if (result == MessageBoxResult.Yes)
                 Save_Click(null, null);
         }
-
-        private const string fileFilters = "RTF (*.rtf)|*.rtf|Plain Text (*.txt)|*.txt|XAML Pack (*.xaml)|*.xaml";
-
-        private bool textHasChanged = false;
 
         private string DataFormatForExtension(string extension) =>
             extension switch
@@ -65,22 +67,10 @@ namespace Codex
             using var stream = File.OpenRead(fileName);
             range.Load(stream, type);
 
-            textHasChanged = false;
+            textDirty = false;
         }
 
-        private void Exit_Click(object sender, RoutedEventArgs e)
-        {
-            if (textHasChanged)
-            {
-                var result = MessageBox.Show("Text has been changed. Would you like to save?", "Text has changed", MessageBoxButton.YesNoCancel);
-                if (result == MessageBoxResult.Cancel)
-                    return;
-                else if (result == MessageBoxResult.Yes)
-                    Save_Click(null, null);
-                textHasChanged = false;
-            }
-            Application.Current.Shutdown();
-        }
+        private void Exit_Click(object sender, RoutedEventArgs e) => Close();
 
         private void MainText_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -90,7 +80,7 @@ namespace Codex
             var wordCount = range.Text.Split(' ', StringSplitOptions.RemoveEmptyEntries).Length;
             WordCount.Text = $"{wordCount} words";
 
-            textHasChanged = true;
+            textDirty = true;
         }
     }
 }
