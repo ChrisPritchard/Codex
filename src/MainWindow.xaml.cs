@@ -13,6 +13,17 @@ namespace Codex
         {
             InitializeComponent();
             MainText.Focus();
+
+            Application.Current.Exit += Current_Exit;
+        }
+
+        private void Current_Exit(object sender, ExitEventArgs e)
+        {
+            if (!textHasChanged)
+                return;
+            var result = MessageBox.Show("Text has been changed. Would you like to save?", "Text has changed", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes)
+                Save_Click(null, null);
         }
 
         private const string fileFilters = "RTF (*.rtf)|*.rtf|Plain Text (*.txt)|*.txt|XAML Pack (*.xaml)|*.xaml";
@@ -66,6 +77,7 @@ namespace Codex
                     return;
                 else if (result == MessageBoxResult.Yes)
                     Save_Click(null, null);
+                textHasChanged = false;
             }
             Application.Current.Shutdown();
         }
