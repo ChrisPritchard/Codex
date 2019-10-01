@@ -4,6 +4,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using System.Windows.Threading;
 
 namespace Codex
 {
@@ -12,12 +13,18 @@ namespace Codex
         private const string fileFilters = "RTF (*.rtf)|*.rtf|Plain Text (*.txt)|*.txt|XAML Pack (*.xaml)|*.xaml";
         private bool textDirty = false;
 
+        private string lastFilename = null;
+        private readonly DispatcherTimer autosaveTimer;
+
         public MainWindow()
         {
             InitializeComponent();
             MainText.Focus();
 
             Closing += MainWindow_Closing;
+            autosaveTimer = new DispatcherTimer { Interval = TimeSpan.FromMinutes(1) };
+            autosaveTimer.Tick += (o, e) => Save();
+            autosaveTimer.Start();
         }
 
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -40,18 +47,28 @@ namespace Codex
                 _ => DataFormats.Xaml,
             };
 
-        private void Save_Click(object sender, RoutedEventArgs e)
+        private void Save()
         {
-            var dialog = new SaveFileDialog { Filter = fileFilters };
-            if (dialog.ShowDialog() != true)
+            if (lastFilename == null || !textDirty)
                 return;
 
-            var fileName = dialog.FileName;
-            var type = DataFormatForExtension(Path.GetExtension(fileName));
-
+            var type = DataFormatForExtension(Path.GetExtension(lastFilename));
             var range = new TextRange(MainText.Document.ContentStart, MainText.Document.ContentEnd);
-            using var stream = File.Create(fileName);
+            using var stream = File.Create(lastFilename);
             range.Save(stream, type);
+        }
+
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            if (lastFilename == null)
+            {
+                var dialog = new SaveFileDialog { Filter = fileFilters };
+                if (dialog.ShowDialog() != true)
+                    return;
+                lastFilename = dialog.FileName;
+            }
+
+            Save();
         }
 
         private void Load_Click(object sender, RoutedEventArgs e)
@@ -68,6 +85,7 @@ namespace Codex
             range.Load(stream, type);
 
             textDirty = false;
+            lastFilename = fileName;
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e) => Close();
