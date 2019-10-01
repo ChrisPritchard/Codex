@@ -17,6 +17,8 @@ namespace Codex
 
         private const string fileFilters = "RTF (*.rtf)|*.rtf|Plain Text (*.txt)|*.txt|XAML Pack (*.xaml)|*.xaml";
 
+        private bool textHasChanged = false;
+
         private string DataFormatForExtension(string extension) =>
             extension switch
             {
@@ -51,9 +53,22 @@ namespace Codex
             var range = new TextRange(MainText.Document.ContentStart, MainText.Document.ContentEnd);
             using var stream = File.OpenRead(fileName);
             range.Load(stream, type);
+
+            textHasChanged = false;
         }
 
-        private void Exit_Click(object sender, RoutedEventArgs e) => Application.Current.Shutdown();
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            if (textHasChanged)
+            {
+                var result = MessageBox.Show("Text has been changed. Would you like to save?", "Text has changed", MessageBoxButton.YesNoCancel);
+                if (result == MessageBoxResult.Cancel)
+                    return;
+                else if (result == MessageBoxResult.Yes)
+                    Save_Click(null, null);
+            }
+            Application.Current.Shutdown();
+        }
 
         private void MainText_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -62,6 +77,8 @@ namespace Codex
             var range = new TextRange(MainText.Document.ContentStart, MainText.Document.ContentEnd);
             var wordCount = range.Text.Split(' ', StringSplitOptions.RemoveEmptyEntries).Length;
             WordCount.Text = $"{wordCount} words";
+
+            textHasChanged = true;
         }
     }
 }
