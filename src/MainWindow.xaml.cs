@@ -17,6 +17,14 @@ namespace Codex
 
         private const string fileFilters = "RTF (*.rtf)|*.rtf|Plain Text (*.txt)|*.txt|XAML Pack (*.xaml)|*.xaml";
 
+        private string DataFormatForExtension(string extension) =>
+            extension switch
+            {
+                ".txt" => DataFormats.Text,
+                ".rtf" => DataFormats.Rtf,
+                _ => DataFormats.Xaml,
+            };
+
         private void Save_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new SaveFileDialog { Filter = fileFilters };
@@ -31,14 +39,6 @@ namespace Codex
             range.Save(stream, type);
         }
 
-        private string DataFormatForExtension(string extension) =>
-            extension switch
-            {
-                ".txt" => DataFormats.Text,
-                ".rtf" => DataFormats.Rtf,
-                _ => DataFormats.Xaml,
-            };
-
         private void Load_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new OpenFileDialog { Filter = fileFilters };
@@ -46,6 +46,11 @@ namespace Codex
                 return;
 
             var fileName = dialog.FileName;
+            var type = DataFormatForExtension(Path.GetExtension(fileName));
+
+            var range = new TextRange(MainText.Document.ContentStart, MainText.Document.ContentEnd);
+            using var stream = File.OpenRead(fileName);
+            range.Load(stream, type);
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e) => Application.Current.Shutdown();
