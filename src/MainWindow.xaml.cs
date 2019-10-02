@@ -3,6 +3,7 @@ using System;
 using System.ComponentModel;
 using System.IO;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -61,8 +62,13 @@ namespace Codex
             using var stream = File.Create(lastFilename);
             range.Save(stream, type);
 
-            Action toInvoke = () => Saving.Text = "";
-            Dispatcher.Invoke(toInvoke, DispatcherPriority.Normal, CancellationToken.None, TimeSpan.FromSeconds(3));
+            textDirty = false;
+
+            Dispatcher.InvokeAsync(async () => 
+            { 
+                await Task.Delay(1000); 
+                Saving.Text = ""; 
+            });
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
