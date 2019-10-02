@@ -1,0 +1,20 @@
+
+[Title]
+	[Act 1]
+		[Sample synopsis of act one]
+			- Stats (chapter count, scene count, word count)
+			Chapter 1
+				[Synopsis of chapter 1]
+				- Stats (scene count, word count)
+				Scene 1
+					[Synopsis of scene 1]
+					- Stats (word count)
+					- Edit
+				Scene 2
+					[Synopsis of scene 2]
+					- Edit
+				[Add Scene]
+			Chapter 2
+			[Add Chapter]
+	Act 2
+	[Add Act]
