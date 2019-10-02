@@ -12,7 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{ED93AC62-C
 		toc-poc.txt = toc-poc.txt
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Codex", "src\Codex\Codex.csproj", "{30D74636-6BE2-458C-9006-0D73F943FFC5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Codex.Views", "src\Codex.Views\Codex.Views.csproj", "{33E97F8B-B599-402B-8720-988834144B52}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,16 +20,16 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{30D74636-6BE2-458C-9006-0D73F943FFC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{30D74636-6BE2-458C-9006-0D73F943FFC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{30D74636-6BE2-458C-9006-0D73F943FFC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{30D74636-6BE2-458C-9006-0D73F943FFC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33E97F8B-B599-402B-8720-988834144B52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33E97F8B-B599-402B-8720-988834144B52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33E97F8B-B599-402B-8720-988834144B52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33E97F8B-B599-402B-8720-988834144B52}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{30D74636-6BE2-458C-9006-0D73F943FFC5} = {10A2B774-651E-462C-9316-23FEB1FD6018}
+		{33E97F8B-B599-402B-8720-988834144B52} = {10A2B774-651E-462C-9316-23FEB1FD6018}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {55E6F1F6-FA13-4163-A05C-8E28D2ACB00D}
