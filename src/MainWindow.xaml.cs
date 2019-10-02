@@ -57,18 +57,26 @@ namespace Codex
 
             Saving.Text = "saving...";
 
-            var type = DataFormatForExtension(Path.GetExtension(lastFilename));
-            var range = new TextRange(MainText.Document.ContentStart, MainText.Document.ContentEnd);
-            using var stream = File.Create(lastFilename);
-            range.Save(stream, type);
+            try
+            {
+                var type = DataFormatForExtension(Path.GetExtension(lastFilename));
+                var range = new TextRange(MainText.Document.ContentStart, MainText.Document.ContentEnd);
+                using var stream = File.Create(lastFilename);
+                range.Save(stream, type);
 
-            textDirty = false;
+                textDirty = false;
 
-            Dispatcher.InvokeAsync(async () => 
-            { 
-                await Task.Delay(1000); 
-                Saving.Text = ""; 
-            });
+                Dispatcher.InvokeAsync(async () =>
+                {
+                    await Task.Delay(1000);
+                    Saving.Text = "";
+                });
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("There was an error saving. Please try again.");
+                File.WriteAllText($"saving-error-{Guid.NewGuid()}.log", ex.ToString());
+            }
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
@@ -91,14 +99,27 @@ namespace Codex
                 return;
 
             var fileName = dialog.FileName;
-            var type = DataFormatForExtension(Path.GetExtension(fileName));
 
-            var range = new TextRange(MainText.Document.ContentStart, MainText.Document.ContentEnd);
-            using var stream = File.OpenRead(fileName);
-            range.Load(stream, type);
+            try
+            {
+                var type = DataFormatForExtension(Path.GetExtension(fileName));
 
-            textDirty = false;
-            lastFilename = fileName;
+                var range = new TextRange(MainText.Document.ContentStart, MainText.Document.ContentEnd);
+                using var stream = File.OpenRead(fileName);
+                range.Load(stream, type);
+
+                textDirty = false;
+                lastFilename = fileName;
+            }
+            catch (ArgumentException ex) when (ex.Message.StartsWith("Unrecognized structure"))
+            {
+                MessageBox.Show("Invalid file - it may be malformed or not in the correct format.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("There was an error loading. Please try again.");
+                File.WriteAllText($"loading-error-{Guid.NewGuid()}.log", ex.ToString());
+            }
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e) => Close();
