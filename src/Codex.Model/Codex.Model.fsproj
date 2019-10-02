@@ -5,7 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="Library.fs" />
+    <Compile Include="CurrentScene.fs" />
+    <Compile Include="Messages.fs" />
+    <Compile Include="Update.fs" />
   </ItemGroup>
 
   <ItemGroup>
