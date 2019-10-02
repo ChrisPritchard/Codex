@@ -98,5 +98,12 @@
                    VerticalAlignment="Bottom"
                    Margin="5"
                    Text="0 words" />
+        <TextBlock x:Name="Saving"
+                   Style="{StaticResource FadeFocus}" 
+                   Opacity="0.4"
+                   HorizontalAlignment="Right" 
+                   VerticalAlignment="Bottom"
+                   Margin="5"
+                   Text="" />
     </Grid>
 </Window>

@@ -1,6 +1,8 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.ComponentModel;
 using System.IO;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -22,12 +24,12 @@ namespace Codex
             MainText.Focus();
 
             Closing += MainWindow_Closing;
-            autosaveTimer = new DispatcherTimer { Interval = TimeSpan.FromMinutes(1) };
+            autosaveTimer = new DispatcherTimer { Interval = TimeSpan.FromMinutes(0.1) };
             autosaveTimer.Tick += (o, e) => Save();
             autosaveTimer.Start();
         }
 
-        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void MainWindow_Closing(object sender, CancelEventArgs e)
         {
             if (!textDirty)
                 return;
@@ -52,10 +54,15 @@ namespace Codex
             if (lastFilename == null || !textDirty)
                 return;
 
+            Saving.Text = "saving...";
+
             var type = DataFormatForExtension(Path.GetExtension(lastFilename));
             var range = new TextRange(MainText.Document.ContentStart, MainText.Document.ContentEnd);
             using var stream = File.Create(lastFilename);
             range.Save(stream, type);
+
+            Action toInvoke = () => Saving.Text = "";
+            Dispatcher.Invoke(toInvoke, DispatcherPriority.Normal, CancellationToken.None, TimeSpan.FromSeconds(3));
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
