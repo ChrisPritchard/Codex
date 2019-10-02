@@ -1,8 +1,15 @@
-﻿// Learn more about F# at http://fsharp.org
+﻿open System
+open Elmish
+open Elmish.WPF
 
-open System
+open Codex.Model
+open Codex.Views
 
-[<EntryPoint>]
-let main argv =
-    printfn "Hello World from F#!"
-    0 // return an integer exit code
+let init _ = { content = "" }, Cmd.none
+
+let bindings _ : Binding<CurrentScene, Messages> list = []
+
+[<EntryPoint; STAThread>]
+let main _ =
+  Program.mkProgramWpf init Update.update bindings
+  |> Program.runWindowWithConfig ElmConfig.Default (MainWindow())

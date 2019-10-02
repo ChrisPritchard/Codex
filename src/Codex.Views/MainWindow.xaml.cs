@@ -2,14 +2,13 @@
 using System;
 using System.ComponentModel;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Threading;
 
-namespace Codex
+namespace Codex.Views
 {
     public partial class MainWindow : Window
     {
