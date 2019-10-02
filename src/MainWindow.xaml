@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Codex"
         mc:Ignorable="d"
-        Title="Codex" Height="800" Width="600" WindowStyle="None" WindowStartupLocation="CenterScreen">
+        Title="Codex" Height="800" Width="600" WindowStyle="None" WindowStartupLocation="CenterScreen" ResizeMode="CanResize">
     <Window.Resources>
         <Style x:Key="FadeFocus" TargetType="{x:Type FrameworkElement}">
             <Style.Triggers>
