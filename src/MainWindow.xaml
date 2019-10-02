@@ -88,7 +88,9 @@
         <RichTextBox x:Name="MainText" 
                      Margin="50,50,50,50" 
                      BorderThickness="0" 
-                     SpellCheck.IsEnabled="True" TextChanged="MainText_TextChanged" >
+                     SpellCheck.IsEnabled="True" 
+                     TextChanged="MainText_TextChanged"
+                     VerticalScrollBarVisibility="Auto">
             <FlowDocument FontFamily="Arial" FontSize="16" LineHeight="24" />
         </RichTextBox>
         <TextBlock x:Name="WordCount"
