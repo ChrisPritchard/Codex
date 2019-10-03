@@ -5,9 +5,9 @@ open Elmish.WPF
 open Codex.Model
 open Codex.Views
 
-let init _ = { content = "" }, Cmd.none
+let init _ = { title = None; synopsis = ""; acts = [] }, Cmd.none
 
-let bindings _ : Binding<CurrentScene, Messages> list = [
+let bindings _ = [
         Binding.cmd Quit "Quit"
     ]
 
