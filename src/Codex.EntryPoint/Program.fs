@@ -7,7 +7,9 @@ open Codex.Views
 
 let init _ = { content = "" }, Cmd.none
 
-let bindings _ : Binding<CurrentScene, Messages> list = []
+let bindings _ : Binding<CurrentScene, Messages> list = [
+        Binding.cmd Quit "Quit"
+    ]
 
 [<EntryPoint; STAThread>]
 let main _ =

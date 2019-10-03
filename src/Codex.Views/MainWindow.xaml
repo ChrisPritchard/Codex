@@ -68,7 +68,7 @@
         </StackPanel>
         <Button
                 Style="{StaticResource FadeFocus}" 
-                Click="Exit_Click" 
+                Command="{Binding Quit}"
                 Opacity="0.4" 
                 Width="30" Height="30" 
                 HorizontalAlignment="Right" 
