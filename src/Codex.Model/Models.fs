@@ -22,6 +22,6 @@ and Scene = {
 }
 
 type Test = {
-    xaml: string
-    pageCount: int
+    xamlContent: string
+    wordCount: int
 }

@@ -5,7 +5,7 @@ open Elmish.WPF
 open Codex.Model
 open Codex.Views
 
-let init _ = { title = None; synopsis = ""; acts = [] }, Cmd.none
+let init _ = { xamlContent = ""; wordCount = 0 }, Cmd.none
 
 let bindings _ = [
         Binding.cmd Quit "Quit"

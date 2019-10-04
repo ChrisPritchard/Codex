@@ -18,28 +18,37 @@ namespace Codex.Views
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private TextRange CurrentRange => new TextRange(CoreRichTextBox.Document.ContentStart, CoreRichTextBox.Document.ContentEnd);
-
-        private static readonly DependencyProperty XamlContentProperty =
-            DependencyProperty.Register("XamlContent", typeof(string), typeof(BindableRichTextBox));
+        private static TextRange GetTextRange(RichTextBox richTextBox) =>
+            new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd);
 
         public string XamlContent
         {
             get => (string)GetValue(XamlContentProperty);
             set => SetValue(XamlContentProperty, value);
         }
-            //get 
-            //{
-            //    using var stream = new MemoryStream();
-            //    CurrentRange.Save(stream, DataFormats.Xaml);
-            //    return Encoding.UTF8.GetString(stream.ToArray());
-            //}
-            //set 
-            //{
-            //    using var stream = new MemoryStream(Encoding.UTF8.GetBytes(value));
-            //    CurrentRange.Load(stream, DataFormats.Xaml);
-            //    TextDirty = false;
-            //}
+
+        private static readonly DependencyProperty XamlContentProperty =
+            DependencyProperty.Register("XamlContent", typeof(string), typeof(BindableRichTextBox), 
+                new PropertyMetadata(OnXamlContentChanged));
+
+        private static void OnXamlContentChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue == e.OldValue || string.IsNullOrWhiteSpace(e.NewValue as string))
+                return;
+
+            var richTextBox = (sender as BindableRichTextBox).CoreRichTextBox;
+            var textRange = GetTextRange(richTextBox);
+
+            using var readStream = new MemoryStream();
+            textRange.Save(readStream, DataFormats.Xaml);
+            var currentXaml = Encoding.UTF8.GetString(readStream.ToArray());
+
+            if (currentXaml == (string)e.NewValue)
+                return;
+
+            using var writeStream = new MemoryStream(Encoding.UTF8.GetBytes((string)e.NewValue));
+            textRange.Load(writeStream, DataFormats.Xaml);
+        }
 
         public int WordCount { get; private set; }
 
@@ -47,11 +56,13 @@ namespace Codex.Views
 
         private void TextChanged(object sender, TextChangedEventArgs e)
         {
-            WordCount = CurrentRange.Text.Split(' ', StringSplitOptions.RemoveEmptyEntries).Length;
+            var textRange = GetTextRange(CoreRichTextBox);
+
+            WordCount = textRange.Text.Split(' ', StringSplitOptions.RemoveEmptyEntries).Length;
             TextDirty = true;
 
             using var stream = new MemoryStream();
-            CurrentRange.Save(stream, DataFormats.Xaml);
+            textRange.Save(stream, DataFormats.Xaml);
             XamlContent = Encoding.UTF8.GetString(stream.ToArray());
 
             if (PropertyChanged == null)
@@ -61,6 +72,4 @@ namespace Codex.Views
             //PropertyChanged(this, new PropertyChangedEventArgs(nameof(WordCount)));
             //PropertyChanged(this, new PropertyChangedEventArgs(nameof(TextDirty)));
         }
-    }
-}
- 
+    }}

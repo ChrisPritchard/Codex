@@ -87,8 +87,7 @@
         </Button>
         <local:BindableRichTextBox x:Name="MainText" 
                      Margin="50,50,50,50"
-                     XamlContent="{Binding xamlContent}"
-                     WordCount="{Binding wordCount, Mode=OneWay}">
+                     XamlContent="{Binding xamlContent}">
         </local:BindableRichTextBox>
         <TextBlock x:Name="WordCount"
                    Style="{StaticResource FadeFocus}" 
