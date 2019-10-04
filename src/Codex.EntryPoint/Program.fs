@@ -8,7 +8,8 @@ open Codex.Views
 let init _ = { xamlContent = ""; wordCount = 0 }, Cmd.none
 
 let bindings _ = [
-        Binding.cmd Quit "Quit"
+        "Quit" |> Binding.cmd Quit 
+        "XamlContent" |> Binding.twoWay ((fun m -> m.xamlContent), UpdateXamlContent) 
     ]
 
 [<EntryPoint; STAThread>]
