@@ -68,7 +68,7 @@
         </StackPanel>
         <Button
                 Style="{StaticResource FadeFocus}" 
-                Command="{Binding Quit}"
+                Click="Exit_Click"
                 Opacity="0.4" 
                 Width="30" Height="30" 
                 HorizontalAlignment="Right" 
@@ -88,7 +88,7 @@
         <local:BindableRichTextBox x:Name="MainText" 
                      Margin="50,50,50,50"
                      XamlContent="{Binding XamlContent}"
-                     WordCount="{Binding WordCount}">
+                     WordCount="{Binding SetWordCount}">
         </local:BindableRichTextBox>
         <StackPanel
                 Style="{StaticResource FadeFocus}" 
@@ -97,7 +97,7 @@
                 HorizontalAlignment="Left" 
                 VerticalAlignment="Bottom"
                 Margin="5">
-            <TextBlock Text="{Binding WordCount}" />
+            <TextBlock Text="{Binding ReadWordCount}" />
             <TextBlock Text=" words" />
         </StackPanel>
         <TextBlock x:Name="Saving"
