@@ -85,14 +85,11 @@
                 <TextBlock Text="X" TextAlignment="Center" FontSize="16" FontWeight="Bold" />
             </StackPanel>
         </Button>
-        <RichTextBox x:Name="MainText" 
+        <local:BindableRichTextBox x:Name="MainText" 
                      Margin="50,50,50,50" 
-                     BorderThickness="0" 
-                     SpellCheck.IsEnabled="True" 
-                     TextChanged="MainText_TextChanged"
-                     VerticalScrollBarVisibility="Auto">
+                     BorderThickness="0">
             <FlowDocument FontFamily="Arial" FontSize="16" LineHeight="24" />
-        </RichTextBox>
+        </local:BindableRichTextBox>
         <TextBlock x:Name="WordCount"
                    Style="{StaticResource FadeFocus}" 
                    Opacity="0.4"
