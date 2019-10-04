@@ -31,6 +31,7 @@
                 Orientation="Horizontal"
                 HorizontalAlignment="Left" 
                 VerticalAlignment="Top"   >
+            <Button Command="{Binding ExamineModel}" Content="ExamineModel" />
             <Button
                 Style="{StaticResource FadeFocus}" 
                 Click="Save_Click" 
@@ -87,8 +88,8 @@
         </Button>
         <local:BindableRichTextBox x:Name="MainText" 
                      Margin="50,50,50,50"
-                     XamlContent="{Binding XamlContent}"
-                     WordCount="{Binding SetWordCount}">
+                     XamlContent="{Binding XamlContent, Mode=TwoWay}"
+                     WordCount="{Binding WordCount, Mode=OneWayToSource}">
         </local:BindableRichTextBox>
         <StackPanel
                 Style="{StaticResource FadeFocus}" 
@@ -97,7 +98,7 @@
                 HorizontalAlignment="Left" 
                 VerticalAlignment="Bottom"
                 Margin="5">
-            <TextBlock Text="{Binding ReadWordCount}" />
+            <TextBlock Text="{Binding WordCount, Mode=OneWay}" />
             <TextBlock Text=" words" />
         </StackPanel>
         <TextBlock x:Name="Saving"

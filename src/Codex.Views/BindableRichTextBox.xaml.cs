@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Windows;
@@ -29,8 +30,6 @@ namespace Codex.Views
             get => (string)GetValue(XamlContentProperty);
             set
             {
-                if (value == XamlContent)
-                    return;
                 SetValue(XamlContentProperty, value);
                 if (!string.IsNullOrEmpty(value) && value != Xaml)
                 {
