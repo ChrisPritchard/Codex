@@ -12,7 +12,7 @@ namespace Codex.Views
         public BindableRichTextBox()
         {
             InitializeComponent();
-            CoreRichTextBox.Focus();
+            Loaded += (o, e) => CoreRichTextBox.Focus();
         }
 
         private static readonly DependencyProperty WordCountProperty =

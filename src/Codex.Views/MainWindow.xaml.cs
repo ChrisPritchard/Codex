@@ -13,10 +13,10 @@ namespace Codex.Views
     public partial class MainWindow : Window
     {
         private const string fileFilters = "RTF (*.rtf)|*.rtf|Plain Text (*.txt)|*.txt|XAML Pack (*.xaml)|*.xaml";
-        private bool textDirty = false;
+        //private bool textDirty = false;
 
         private string lastFilename = null;
-        private readonly DispatcherTimer autosaveTimer;
+        //private readonly DispatcherTimer autosaveTimer;
 
         public MainWindow()
         {
@@ -24,21 +24,21 @@ namespace Codex.Views
             MainText.Focus();
 
             Closing += MainWindow_Closing;
-            autosaveTimer = new DispatcherTimer { Interval = TimeSpan.FromMinutes(0.1) };
-            autosaveTimer.Tick += (o, e) => Save();
-            autosaveTimer.Start();
+            //autosaveTimer = new DispatcherTimer { Interval = TimeSpan.FromMinutes(0.1) };
+            //autosaveTimer.Tick += (o, e) => Save();
+            //autosaveTimer.Start();
         }
 
         private void MainWindow_Closing(object sender, CancelEventArgs e)
         {
-            if (!textDirty)
-                return;
+            //if (!textDirty)
+            //    return;
 
-            var result = MessageBox.Show("Text has been changed. Would you like to save?", "Text has changed", MessageBoxButton.YesNoCancel);
-            if (result == MessageBoxResult.Cancel)
-                e.Cancel = true;
-            else if (result == MessageBoxResult.Yes)
-                Save_Click(null, null);
+            //var result = MessageBox.Show("Text has been changed. Would you like to save?", "Text has changed", MessageBoxButton.YesNoCancel);
+            //if (result == MessageBoxResult.Cancel)
+            //    e.Cancel = true;
+            //else if (result == MessageBoxResult.Yes)
+            //    Save_Click(null, null);
         }
 
         private string DataFormatForExtension(string extension) =>
