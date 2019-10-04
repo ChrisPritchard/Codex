@@ -5,3 +5,4 @@ type Messages =
     | Load
     | Quit
     | UpdateXamlContent of string
+    | UpdateWordCount of int

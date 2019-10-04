@@ -10,6 +10,7 @@ let init _ = { xamlContent = ""; wordCount = 0 }, Cmd.none
 let bindings _ = [
         "Quit" |> Binding.cmd Quit 
         "XamlContent" |> Binding.twoWay ((fun m -> m.xamlContent), UpdateXamlContent) 
+        "WordCount" |> Binding.twoWay ((fun m -> m.wordCount), UpdateWordCount)
     ]
 
 [<EntryPoint; STAThread>]

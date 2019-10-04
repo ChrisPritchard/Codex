@@ -22,9 +22,21 @@ namespace Codex.Views
         private static readonly DependencyProperty XamlContentProperty =
             DependencyProperty.Register(nameof(XamlContent), typeof(string), typeof(BindableRichTextBox));
 
-        public int WordCount { get => (int)GetValue(WordCountProperty); private set => SetValue(WordCountProperty, value); }
-        public bool IsDirty { get => (bool)GetValue(IsDirtyProperty); private set => SetValue(IsDirtyProperty, value); }
-        public string XamlContent { get => (string)GetValue(XamlContentProperty); set => SetValue(XamlContentProperty, value); }
+        public int WordCount { get => (int)GetValue(WordCountProperty); set => SetValue(WordCountProperty, value); }
+        public bool IsDirty { get => (bool)GetValue(IsDirtyProperty); set => SetValue(IsDirtyProperty, value); }
+        public string XamlContent 
+        { 
+            get => (string)GetValue(XamlContentProperty);
+            set
+            { 
+                SetValue(XamlContentProperty, value);
+                if (!string.IsNullOrEmpty(value))
+                {
+                    Xaml = value;
+                    IsDirty = false;
+                }
+            }
+        }
 
         private TextRange CurrentRange => new TextRange(CoreRichTextBox.Document.ContentStart, CoreRichTextBox.Document.ContentEnd);
 

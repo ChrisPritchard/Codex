@@ -87,15 +87,19 @@
         </Button>
         <local:BindableRichTextBox x:Name="MainText" 
                      Margin="50,50,50,50"
-                     XamlContent="{Binding XamlContent, Mode=TwoWay}">
+                     XamlContent="{Binding XamlContent, Mode=TwoWay}"
+                     WordCount="{Binding WordCount, Mode=OneWayToSource}">
         </local:BindableRichTextBox>
-        <TextBlock x:Name="WordCount"
-                   Style="{StaticResource FadeFocus}" 
-                   Opacity="0.4"
-                   HorizontalAlignment="Left" 
-                   VerticalAlignment="Bottom"
-                   Margin="5"
-                   Text="0 words" />
+        <StackPanel
+                Style="{StaticResource FadeFocus}" 
+                Opacity="0.4"
+                Orientation="Horizontal"
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Bottom"
+                Margin="5">
+            <TextBlock Text="{Binding WordCount, Mode=OneWayToSource}" />
+            <TextBlock Text=" words" />
+        </StackPanel>
         <TextBlock x:Name="Saving"
                    Style="{StaticResource FadeFocus}" 
                    Opacity="0.4"

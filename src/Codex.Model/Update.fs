@@ -12,3 +12,5 @@ let update message model =
         model, Cmd.none
     | UpdateXamlContent s ->
         { model with xamlContent = s }, Cmd.none
+    | UpdateWordCount n ->
+        { model with wordCount = n }, Cmd.none
