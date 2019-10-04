@@ -9,7 +9,10 @@
     <Grid>
         <RichTextBox x:Name="CoreRichTextBox" 
                      SpellCheck.IsEnabled="True" 
-                     VerticalScrollBarVisibility="Auto">
+                     VerticalScrollBarVisibility="Auto"
+                     BorderThickness="0"
+                     Margin="0"
+                     TextChanged="TextChanged">
             <FlowDocument FontFamily="Arial" FontSize="16" LineHeight="24" />
         </RichTextBox> 
     </Grid>

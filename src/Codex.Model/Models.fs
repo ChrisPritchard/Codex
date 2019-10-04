@@ -20,3 +20,8 @@ and Scene = {
     content: string
     wordCount: int
 }
+
+type Test = {
+    xaml: string
+    pageCount: int
+}
