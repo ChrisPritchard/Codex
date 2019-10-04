@@ -1,12 +1,7 @@
 ﻿using Microsoft.Win32;
-using System;
 using System.ComponentModel;
-using System.IO;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Threading;
 
 namespace Codex.Views
 {
@@ -23,7 +18,6 @@ namespace Codex.Views
             InitializeComponent();
             MainText.Focus();
 
-            Closing += MainWindow_Closing;
             //autosaveTimer = new DispatcherTimer { Interval = TimeSpan.FromMinutes(0.1) };
             //autosaveTimer.Tick += (o, e) => Save();
             //autosaveTimer.Start();
