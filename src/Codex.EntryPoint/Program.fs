@@ -5,13 +5,10 @@ open Elmish.WPF
 open Codex.Model
 open Codex.Views
 
-let init _ = { xamlContent = ""; wordCount = 20 }, Cmd.none
-
-let bindings _ = [
-        "ExamineModel" |> Binding.cmd ExamineModel
-        "XamlContent" |> Binding.twoWay ((fun m -> m.xamlContent), UpdateXamlContent) 
-        "WordCount" |> Binding.twoWay ((fun m -> m.wordCount), UpdateWordCount)
-    ]
+let init _ = 
+    { 
+        sceneEditorState = Some { xamlContent = ""; wordCount = 0 } 
+    }, Cmd.none
 
 [<EntryPoint; STAThread>]
 let main _ =

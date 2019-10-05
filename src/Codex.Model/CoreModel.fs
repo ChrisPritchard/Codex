@@ -1,4 +1,4 @@
-﻿namespace Codex.Model
+﻿module CoreModel
 
 type Novel = {
     title: string option
@@ -18,10 +18,5 @@ and Chapter = {
 and Scene = {
     outline: string
     content: string
-    wordCount: int
-}
-
-type Test = {
-    xamlContent: string
     wordCount: int
 }
