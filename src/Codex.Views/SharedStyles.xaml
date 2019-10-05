@@ -2,6 +2,9 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:Codex.Views">
     <Style x:Key="FadeFocus" TargetType="{x:Type FrameworkElement}">
+        <Setter Property="FrameworkElement.Opacity">
+            <Setter.Value>0.4</Setter.Value>
+        </Setter>
         <Style.Triggers>
             <EventTrigger RoutedEvent="Control.MouseEnter">
                 <BeginStoryboard>
@@ -18,5 +21,17 @@
                 </BeginStoryboard>
             </EventTrigger>
         </Style.Triggers>
+    </Style>
+
+    <Style x:Key="TextOnlyButton" TargetType="Button" BasedOn="{StaticResource FadeFocus}">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="Transparent">
+                        <ContentPresenter />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 </ResourceDictionary>
