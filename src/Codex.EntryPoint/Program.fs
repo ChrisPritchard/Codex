@@ -6,10 +6,11 @@ open MainWindow
 
 let init _ = 
     { 
-        sceneEditor = Some { title = "Current Scene"; xamlContent = ""; wordCount = 0 } 
+        sceneEditor = None//Some { title = "Current Scene"; xamlContent = ""; wordCount = 0 } 
     }, Cmd.none
        
 let mainWindowBindings _ = [
+    "ShowSceneEditor" |> Binding.cmd ShowSceneEditor
     "SceneEditor" |> Binding.subModelWin (
         (fun m -> m.sceneEditor |> WindowState.ofOption), 
         snd, 

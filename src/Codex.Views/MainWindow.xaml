@@ -9,6 +9,7 @@
     <Grid>
         <StackPanel HorizontalAlignment="Center">
             <TextBlock TextAlignment="Center" Text="Codex"></TextBlock>
+            <Button Command="{Binding ShowSceneEditor}" Content="Show Scene Editor" />
         </StackPanel>
     </Grid>
 </Window>

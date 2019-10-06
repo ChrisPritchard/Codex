@@ -8,10 +8,13 @@ type CodexModel = {
 }
 
 type Message = 
+    | ShowSceneEditor
     | SceneEditorMessage of SceneEditor.Message
 
 let update message model =
     match message, model.sceneEditor with
+    | ShowSceneEditor, None ->
+        { model with sceneEditor = Some { title = "Current Scene"; xamlContent = ""; wordCount = 0 } }, Cmd.none
     | SceneEditorMessage SceneEditor.CloseSceneEditor, Some _ ->
         { model with sceneEditor = None }, Cmd.none
     | SceneEditorMessage m, Some subWindow -> 
