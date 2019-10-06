@@ -9,12 +9,14 @@ let init _ =
         sceneEditor = Some { title = "Current Scene"; xamlContent = ""; wordCount = 0 } 
     }, Cmd.none
        
-let mainWindowBindings _ =
+let mainWindowBindings _ = [
     "SceneEditor" |> Binding.subModelWin (
-        (fun m -> m.sceneEditor.visible |> WindowState.ofOption), 
+        (fun m -> m.sceneEditor |> WindowState.ofOption), 
+        snd, 
         MainWindow.SceneEditorMessage,
-        SceneEditor.bindings, 
+        SceneEditor.bindings,
         (Codex.Views.SceneEditor))
+    ]
 
 [<EntryPoint; STAThread>]
 let main _ =
