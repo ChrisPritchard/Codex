@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Codex.Views"
-        xmlns:model="clr-namespace:Codex.Model.CoreModel"
+        xmlns:model="clr-namespace:Codex.Model;assembly=Codex.Model"
         mc:Ignorable="d"
         Title="TableOfContents" Height="450" Width="800">
     <DockPanel>
@@ -15,13 +15,13 @@
         <TreeView ItemsSource="{Binding Acts}">
             
             <TreeView.Resources>
-                <HierarchicalDataTemplate DataType="{x:Type model:Act}" ItemsSource="{Binding Children}">
+                <HierarchicalDataTemplate DataType="{x:Type model:CoreModel+Act}" ItemsSource="{Binding Chapters}">
                     <TextBlock Text="{Binding Title}" />
                 </HierarchicalDataTemplate>
-                <HierarchicalDataTemplate DataType="{x:Type model:Chapter}" ItemsSource="{Binding Children}">
+                <HierarchicalDataTemplate DataType="{x:Type model:CoreModel+Chapter}" ItemsSource="{Binding Scenes}">
                     <TextBlock Text="{Binding Title}" />
                 </HierarchicalDataTemplate>
-                <DataTemplate DataType="{x:Type model:Scene}">
+                <DataTemplate DataType="{x:Type model:CoreModel+Scene}">
                     <TextBlock Text="{Binding Title}" />
                 </DataTemplate>
             </TreeView.Resources>
