@@ -4,18 +4,34 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Codex.Views"
+        xmlns:model="clr-namespace:Codex.Model.CoreModel"
         mc:Ignorable="d"
         Title="TableOfContents" Height="450" Width="800">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="100" />
-            <RowDefinition Height="100" />
-            <RowDefinition />
-        </Grid.RowDefinitions>
-        <TextBlock Text="[Book Title]" HorizontalAlignment="Center" />
-        <TextBlock Text="Table of Contents" HorizontalAlignment="Center" />
-        <ListView>
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Top" Height="200">
+            <TextBlock Margin="10" Text="[Book Title]" HorizontalAlignment="Center" />
+            <TextBlock Margin="10" Text="Table of Contents" HorizontalAlignment="Center" />
+        </StackPanel>
+        <TreeView ItemsSource="{Binding Acts}">
             
-        </ListView>
-    </Grid>
+            <TreeView.Resources>
+                <HierarchicalDataTemplate DataType="{x:Type model:Act}" ItemsSource="{Binding Children}">
+                    <TextBlock Text="{Binding Title}" />
+                </HierarchicalDataTemplate>
+                <HierarchicalDataTemplate DataType="{x:Type model:Chapter}" ItemsSource="{Binding Children}">
+                    <TextBlock Text="{Binding Title}" />
+                </HierarchicalDataTemplate>
+                <DataTemplate DataType="{x:Type model:Scene}">
+                    <TextBlock Text="{Binding Title}" />
+                </DataTemplate>
+            </TreeView.Resources>
+            
+            <TreeView.ItemContainerStyle>
+                <Style TargetType="{x:Type TreeViewItem}">
+                    <Setter Property="IsExpanded" Value="True"/>
+                </Style>
+            </TreeView.ItemContainerStyle>
+
+        </TreeView>
+    </DockPanel>
 </Window>
