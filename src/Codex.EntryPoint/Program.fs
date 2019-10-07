@@ -7,9 +7,11 @@ open MainWindow
 let init _ = 
     { 
         sceneEditor = None//Some { title = "Current Scene"; xamlContent = ""; wordCount = 0 } 
+        tableOfContents = None
     }, Cmd.none
        
 let mainWindowBindings _ = [
+
     "ShowSceneEditor" |> Binding.cmd ShowSceneEditor
     "SceneEditor" |> Binding.subModelWin (
         (fun m -> m.sceneEditor |> WindowState.ofOption), 
@@ -17,6 +19,15 @@ let mainWindowBindings _ = [
         MainWindow.SceneEditorMessage,
         SceneEditor.bindings,
         (Codex.Views.SceneEditor))
+
+    "ShowTableOfContents" |> Binding.cmd ShowTableOfContents
+    "TableOfContents" |> Binding.subModelWin (
+           (fun m -> m.tableOfContents |> WindowState.ofOption), 
+           snd, 
+           MainWindow.TableOfContentsMessage,
+           TableOfContents.bindings,
+           (Codex.Views.TableOfContents))
+
     ]
 
 [<EntryPoint; STAThread>]
