@@ -1,4 +1,4 @@
-﻿module CoreModel
+﻿module Core.Models.CoreModel
 
 type Novel = {
     title: string option
