@@ -5,7 +5,7 @@ open Elmish.WPF
 
 type CodexModel = {
     sceneEditor: SceneEditor.Model option
-    tableOfContents: TableOfContents.Model option
+    tableOfContents: TableOfContents.Novel option
 }
 
 type Message = 
@@ -13,6 +13,23 @@ type Message =
     | SceneEditorMessage of SceneEditor.Message
     | ShowTableOfContents
     | TableOfContentsMessage of TableOfContents.Message
+
+let testNovel: TableOfContents.Novel = {
+        title = "My Test Novel"
+        acts = [
+            {
+                title = "Act 1"
+                chapters = [
+                    {
+                        title = "Chapter 1"
+                        scenes = [
+                            { wordCount = 20 }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
 
 let update message model =
     match message, model.sceneEditor, model.tableOfContents with
@@ -25,7 +42,8 @@ let update message model =
         { model with sceneEditor = Some subWindow }, Cmd.map SceneEditorMessage subMessage
 
     | ShowTableOfContents, _, None ->
-        { model with tableOfContents = Some { title = "My Custom Novel" } }, Cmd.none
+        { model with 
+            tableOfContents = Some testNovel }, Cmd.none
     | TableOfContentsMessage TableOfContents.CloseTableOfContents, _, Some _ ->
         { model with tableOfContents = None }, Cmd.none
     // no other messages on this window at this time
