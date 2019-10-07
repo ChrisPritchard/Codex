@@ -25,7 +25,7 @@ let mainWindowBindings _ = [
            (fun m -> m.tableOfContents |> WindowState.ofOption), 
            snd, 
            MainWindow.TableOfContentsMessage,
-           TableOfContents.bindings,
+           TableOfContents.novelBindings,
            (Codex.Views.TableOfContents))
 
     ]
