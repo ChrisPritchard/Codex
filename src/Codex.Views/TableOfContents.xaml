@@ -8,28 +8,34 @@
         Title="TableOfContents" Height="450" Width="800">
     <Window.Resources>
         <DataTemplate x:Key="SceneTemplate">
-            <TextBlock Text="{Binding Title}" />
+            <Border BorderThickness="2" BorderBrush="Blue">
+                <StackPanel>
+                    <TextBlock Text="{Binding WordCount}" />
+                </StackPanel>
+            </Border>
         </DataTemplate>
         <HierarchicalDataTemplate x:Key="ChapterTemplate" ItemsSource="{Binding Scenes}" ItemTemplate="{StaticResource SceneTemplate}">
-            <TextBlock Text="{Binding Title}" />
+            <Border BorderThickness="2" BorderBrush="Green">
+                <StackPanel>
+                    <TextBlock Text="{Binding Title}" />
+                </StackPanel>
+            </Border>
         </HierarchicalDataTemplate>
         <HierarchicalDataTemplate x:Key="ActTemplate" ItemsSource="{Binding Chapters}" ItemTemplate="{StaticResource ChapterTemplate}">
-            <TextBlock Text="{Binding Title}" />
+            <Border BorderThickness="2" BorderBrush="Red">
+                <StackPanel>
+                    <TextBlock Text="{Binding Title}" />
+                </StackPanel>
+            </Border>
         </HierarchicalDataTemplate>
     </Window.Resources>
-    <DockPanel>
-        <StackPanel DockPanel.Dock="Top" Height="200">
-            <TextBlock Margin="10" Text="[Book Title]" HorizontalAlignment="Center" />
-            <TextBlock Margin="10" Text="Table of Contents" HorizontalAlignment="Center" />
-        </StackPanel>
-        
-        <TreeView ItemsSource="{Binding Acts}" ItemTemplate="{StaticResource SceneTemplate}">
+    <Grid>
+        <TreeView ItemsSource="{Binding Acts}" ItemTemplate="{StaticResource ActTemplate}">
             <TreeView.ItemContainerStyle>
                 <Style TargetType="{x:Type TreeViewItem}">
                     <Setter Property="IsExpanded" Value="True"/>
                 </Style>
             </TreeView.ItemContainerStyle>
         </TreeView>
-        
-    </DockPanel>
+    </Grid>
 </Window>

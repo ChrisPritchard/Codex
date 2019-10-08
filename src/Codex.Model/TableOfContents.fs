@@ -33,7 +33,7 @@ let update message model =
         model, Cmd.none
 
 let sceneBindings _ : Binding<(((Novel * Act) * Chapter) * Scene), Message> list = [
-    "wordCount" |> Binding.oneWay (fun (_, m) -> m.wordCount)
+    "WordCount" |> Binding.oneWay (fun (_, m) -> m.wordCount)
     ]
 
 let chapterBindings _ : Binding<((Novel * Act) * Chapter), Message> list = [
@@ -46,7 +46,7 @@ let chapterBindings _ : Binding<((Novel * Act) * Chapter), Message> list = [
      
 let actBindings _ : Binding<(Novel * Act), Message> list = [
         "Title" |> Binding.oneWay (fun (_, m) -> m.title)
-        "Scenes" |> Binding.subModelSeq(
+        "Chapters" |> Binding.subModelSeq(
              (fun (_, m) -> m.chapters),
              id,
              chapterBindings)
