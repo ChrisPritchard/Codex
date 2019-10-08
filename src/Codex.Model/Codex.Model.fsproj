@@ -8,7 +8,7 @@
   <ItemGroup>
     <Compile Include="SceneEditor.fs" />
     <Compile Include="TableOfContents.fs" />
-    <Compile Include="MainWindow.fs" />
+    <Compile Include="TestNovel.fs" />
   </ItemGroup>
 
   <ItemGroup>
