@@ -14,6 +14,7 @@
             <TextBlock TextAlignment="Center" Text="Codex"></TextBlock>
             <Button Command="{Binding ShowSceneEditor}" Content="Show Scene Editor" />
             <Button Command="{Binding ShowTableOfContents}" Content="Show Table of Contents" />
+            <Button Click="SwitchTheme_Click" Content="Switch Theme" />
         </StackPanel>
     </Grid>
 </Window>
