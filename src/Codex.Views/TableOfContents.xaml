@@ -7,27 +7,36 @@
         mc:Ignorable="d"
         Title="TableOfContents" Height="450" Width="800">
     <Window.Resources>
-        <DataTemplate x:Key="SceneTemplate">
-            <Border BorderThickness="2" BorderBrush="Blue">
-                <StackPanel>
-                    <TextBlock Text="{Binding WordCount}" />
-                </StackPanel>
-            </Border>
-        </DataTemplate>
-        <HierarchicalDataTemplate x:Key="ChapterTemplate" ItemsSource="{Binding Scenes}" ItemTemplate="{StaticResource SceneTemplate}">
-            <Border BorderThickness="2" BorderBrush="Green">
-                <StackPanel>
-                    <TextBlock Text="{Binding Title}" />
-                </StackPanel>
-            </Border>
-        </HierarchicalDataTemplate>
-        <HierarchicalDataTemplate x:Key="ActTemplate" ItemsSource="{Binding Chapters}" ItemTemplate="{StaticResource ChapterTemplate}">
-            <Border BorderThickness="2" BorderBrush="Red">
-                <StackPanel>
-                    <TextBlock Text="{Binding Title}" />
-                </StackPanel>
-            </Border>
-        </HierarchicalDataTemplate>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="SharedStyles.xaml" />
+                <ResourceDictionary>
+                    <DataTemplate x:Key="SceneTemplate">
+                        <Border BorderThickness="2" BorderBrush="Blue">
+                            <StackPanel>
+                                <TextBlock Text="{Binding WordCount}" />
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+
+                    <HierarchicalDataTemplate x:Key="ChapterTemplate" ItemsSource="{Binding Scenes}" ItemTemplate="{StaticResource SceneTemplate}">
+                        <Border BorderThickness="2" BorderBrush="Green">
+                            <StackPanel>
+                                <TextBlock Text="{Binding Title}" />
+                            </StackPanel>
+                        </Border>
+                    </HierarchicalDataTemplate>
+
+                    <HierarchicalDataTemplate x:Key="ActTemplate" ItemsSource="{Binding Chapters}" ItemTemplate="{StaticResource ChapterTemplate}">
+                        <Border BorderThickness="2" BorderBrush="Red">
+                            <StackPanel>
+                                <TextBlock Text="{Binding Title}" />
+                            </StackPanel>
+                        </Border>
+                    </HierarchicalDataTemplate>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Window.Resources>
     <Grid>
         <TreeView ItemsSource="{Binding Acts}" ItemTemplate="{StaticResource ActTemplate}">

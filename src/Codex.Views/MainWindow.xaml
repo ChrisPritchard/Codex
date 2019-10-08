@@ -6,6 +6,9 @@
         xmlns:local="clr-namespace:Codex.Views"
         mc:Ignorable="d"
         Title="Codex" Height="300" Width="300" WindowStyle="SingleBorderWindow" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <ResourceDictionary Source="SharedStyles.xaml" />
+    </Window.Resources>
     <Grid>
         <StackPanel HorizontalAlignment="Center">
             <TextBlock TextAlignment="Center" Text="Codex"></TextBlock>

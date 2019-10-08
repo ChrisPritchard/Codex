@@ -9,4 +9,10 @@
     <ProjectReference Include="..\Codex.Model\Codex.Model.fsproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Page Update="Themes\Dark.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+
 </Project>
