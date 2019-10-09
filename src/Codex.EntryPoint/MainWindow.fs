@@ -13,7 +13,7 @@ let fileFilter = "RTF (*.rtf)|*.rtf|Plain Text (*.txt)|*.txt|XAML Pack (*.xaml)|
 
 type CodexModel = {
     sceneEditor: SceneEditor.Model option
-    tableOfContents: TableOfContents.Novel option
+    tableOfContents: Core.Novel option
 }
 
 type Message = 
@@ -100,7 +100,7 @@ let bindings _ = [
         (fun m -> m.tableOfContents |> WindowState.ofOption), 
         snd, 
         TableOfContentsMessage,
-        TableOfContents.novelBindings,
+        TableOfContents.bindings,
         (Codex.Views.TableOfContents))
 
     ]

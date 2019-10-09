@@ -1,5 +1,7 @@
 ﻿module TestNovel
 
+open Core
+
 let testNovel: TableOfContents.Novel = {
         title = "My Test Novel"
         acts = [

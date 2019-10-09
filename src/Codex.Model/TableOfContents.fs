@@ -2,22 +2,7 @@
 
 open Elmish
 open Elmish.WPF
-
-type Novel = {
-    title: string
-    acts: Act list
-    }
-and Act = {
-    title: string
-    chapters: Chapter list
-    }
-and Chapter = {
-    title: string
-    scenes: Scene list
-    }
-and Scene = {
-    wordCount: int
-    }
+open Core
 
 type Message =
     | CloseTableOfContents
@@ -32,11 +17,11 @@ let update message model =
         // messages not covered above are probably used by parent windows (e.g. main for close)
         model, Cmd.none
 
-let sceneBindings _ : Binding<(((Novel * Act) * Chapter) * Scene), Message> list = [
+let private sceneBindings _ : Binding<(((Novel * Act) * Chapter) * Scene), Message> list = [
     "WordCount" |> Binding.oneWay (fun (_, m) -> m.wordCount)
     ]
 
-let chapterBindings _ : Binding<((Novel * Act) * Chapter), Message> list = [
+let private chapterBindings _ : Binding<((Novel * Act) * Chapter), Message> list = [
     "Title" |> Binding.oneWay (fun (_, m) -> m.title)
     "Scenes" |> Binding.subModelSeq(
          (fun (_, m) -> m.scenes),
@@ -44,7 +29,7 @@ let chapterBindings _ : Binding<((Novel * Act) * Chapter), Message> list = [
          sceneBindings)
     ]
      
-let actBindings _ : Binding<(Novel * Act), Message> list = [
+let private actBindings _ : Binding<(Novel * Act), Message> list = [
         "Title" |> Binding.oneWay (fun (_, m) -> m.title)
         "Chapters" |> Binding.subModelSeq(
              (fun (_, m) -> m.chapters),
@@ -52,7 +37,7 @@ let actBindings _ : Binding<(Novel * Act), Message> list = [
              chapterBindings)
     ]
 
-let novelBindings _ : Binding<Novel, Message> list = [
+let bindings _ : Binding<Novel, Message> list = [
         "Title" |> Binding.oneWay (fun m -> m.title)
         "CloseWindow" |> Binding.cmd CloseTableOfContents
         "Acts" |> Binding.subModelSeq(

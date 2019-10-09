@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Core.fs" />
     <Compile Include="SceneEditor.fs" />
     <Compile Include="TableOfContents.fs" />
     <Compile Include="TestNovel.fs" />
