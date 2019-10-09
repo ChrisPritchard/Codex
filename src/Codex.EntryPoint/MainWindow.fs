@@ -3,11 +3,12 @@
 open Elmish
 open Elmish.WPF
 
-open System
 open System.Windows
-open Microsoft.Win32
-open System.Xml.Serialization
 open System.IO
+open System.Xml.Serialization
+open Microsoft.Win32
+
+open Core
 
 let fileFilter = "RTF (*.rtf)|*.rtf|Plain Text (*.txt)|*.txt|XAML Pack (*.xaml)|*.xaml"
 
@@ -47,17 +48,19 @@ let saveFile fileName =
     )
 
 let saveCurrentModel model fileName =
-    let serialiser = new XmlSerializer (typeof<CodexModel>)
+    let serialiser = new XmlSerializer (typeof<Novel>)
     use stream = File.Create fileName
     serialiser.Serialize(stream, model) // TODO save xaml text content
     ()
 
 let update message model =
     match message, model.sceneEditor, model.tableOfContents with
-    | LoadNovel, _, _ -> model, Cmd.OfFunc.perform openFile "" id // TODO set filename
-    | SaveNovel, _, _ -> model, Cmd.OfFunc.perform saveFile "" id // TODO set filename
-    | SaveFileSelected fileName, _, _ ->
-        saveCurrentModel model fileName
+    | LoadNovel, _, _ -> 
+        model, Cmd.OfFunc.perform openFile "" id // TODO set filename
+    | SaveNovel, _, _ -> 
+        model, Cmd.OfFunc.perform saveFile "" id // TODO set filename
+    | SaveFileSelected fileName, _, Some subWindow ->
+        saveCurrentModel subWindow fileName
         model, Cmd.none
 
     | ShowSceneEditor, None, _ ->

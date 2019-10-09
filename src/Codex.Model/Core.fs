@@ -1,18 +1,18 @@
 ﻿module Core
 
-type Novel = {
+type [<CLIMutable>]Novel = {
     title: string
     acts: Act list
     }
-and Act = {
+and [<CLIMutable>]Act = {
     title: string
     chapters: Chapter list
     }
-and Chapter = {
+and [<CLIMutable>]Chapter = {
     title: string
     scenes: Scene list
     }
-and Scene = {
+and [<CLIMutable>]Scene = {
     wordCount: int
     xamlContent: string
     }
