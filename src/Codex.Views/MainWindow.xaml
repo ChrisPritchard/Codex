@@ -10,11 +10,37 @@
         <ResourceDictionary Source="SharedStyles.xaml" />
     </Window.Resources>
     <Grid>
-        <StackPanel HorizontalAlignment="Center">
-            <TextBlock TextAlignment="Center" Text="Codex"></TextBlock>
-            <Button Command="{Binding ShowSceneEditor}" Content="Show Scene Editor" />
-            <Button Command="{Binding ShowTableOfContents}" Content="Show Table of Contents" />
-            <Button Click="SwitchTheme_Click" Content="Switch Theme" />
+        <StackPanel HorizontalAlignment="Center" Margin="5">
+            <Button 
+                Command="{Binding LoadNovel}" 
+                Content="Load Novel Project" 
+                Style="{DynamicResource TextOnlyButton}" 
+                FontSize="20" 
+                Margin="10" />
+            <Button 
+                Command="{Binding SaveNovel}" 
+                Content="Save Current Novel Project" 
+                Style="{DynamicResource TextOnlyButton}" 
+                FontSize="20" 
+                Margin="10" />
+            <Button 
+                Command="{Binding ShowSceneEditor}" 
+                Content="Show Scene Editor" 
+                Style="{DynamicResource TextOnlyButton}" 
+                FontSize="20" 
+                Margin="10" />
+            <Button 
+                Command="{Binding ShowTableOfContents}" 
+                Content="Show Table of Contents"
+                Style="{DynamicResource TextOnlyButton}" 
+                FontSize="20" 
+                Margin="10" />
+            <Button 
+                Click="SwitchTheme_Click" 
+                Content="Switch Theme" 
+                Style="{DynamicResource TextOnlyButton}" 
+                FontSize="20" 
+                Margin="10" />
         </StackPanel>
     </Grid>
 </Window>

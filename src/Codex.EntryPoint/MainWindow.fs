@@ -3,8 +3,11 @@
 open Elmish
 open Elmish.WPF
 
+open System
 open System.Windows
 open Microsoft.Win32
+open System.Xml.Serialization
+open System.IO
 
 let fileFilter = "RTF (*.rtf)|*.rtf|Plain Text (*.txt)|*.txt|XAML Pack (*.xaml)|*.xaml"
 
@@ -14,7 +17,10 @@ type CodexModel = {
 }
 
 type Message = 
-    | FileSelected of fileName:string
+    | LoadNovel
+    | SaveNovel
+    | LoadFileSelected of fileName:string
+    | SaveFileSelected of fileName:string
     | FileSelectCanceled
 
     | ShowSceneEditor
@@ -27,7 +33,7 @@ let openFile fileName =
         let dialog = OpenFileDialog (Filter = fileFilter, FileName = fileName)
         let result = dialog.ShowDialog ()
         if result.HasValue && result.Value
-            then FileSelected dialog.FileName
+            then LoadFileSelected dialog.FileName
             else FileSelectCanceled
     )
 
@@ -36,12 +42,24 @@ let saveFile fileName =
         let dialog = SaveFileDialog (Filter = fileFilter, FileName = fileName)
         let result = dialog.ShowDialog ()
         if result.HasValue && result.Value
-            then FileSelected dialog.FileName
+            then SaveFileSelected dialog.FileName
             else FileSelectCanceled
     )
 
+let saveCurrentModel model fileName =
+    let serialiser = new XmlSerializer (typeof<CodexModel>)
+    use stream = File.Create fileName
+    serialiser.Serialize(stream, model) // TODO save xaml text content
+    ()
+
 let update message model =
     match message, model.sceneEditor, model.tableOfContents with
+    | LoadNovel, _, _ -> model, Cmd.OfFunc.perform openFile "" id // TODO set filename
+    | SaveNovel, _, _ -> model, Cmd.OfFunc.perform saveFile "" id // TODO set filename
+    | SaveFileSelected fileName, _, _ ->
+        saveCurrentModel model fileName
+        model, Cmd.none
+
     | ShowSceneEditor, None, _ ->
         { model with sceneEditor = Some { title = "Current Scene"; xamlContent = ""; wordCount = 0 } }, Cmd.none
     | SceneEditorMessage SceneEditor.CloseSceneEditor, Some _, _ ->
@@ -65,6 +83,9 @@ let update message model =
         model, Cmd.none
 
 let bindings _ = [
+
+    "LoadNovel" |> Binding.cmd LoadNovel
+    "SaveNovel" |> Binding.cmd SaveNovel
 
     "ShowSceneEditor" |> Binding.cmd ShowSceneEditor
     "SceneEditor" |> Binding.subModelWin (
