@@ -12,14 +12,29 @@
                 <ResourceDictionary Source="SharedStyles.xaml" />
                 <ResourceDictionary>
 
-                    <DataTemplate DataType="{x:Type models:Core+Grouping}">
+                    <DataTemplate x:Key="PartTemplate">
+                        <ContentPresenter 
+                                x:Name="PartPresenter"
+                                  ContentTemplate="{StaticResource GroupingTemplate}" />
+                        <DataTemplate.Triggers>
+                            <DataTrigger 
+                                    Binding="{Binding IsContent}"
+                                    Value="true">
+                                <Setter TargetName="PartPresenter"
+                                    Property="ContentTemplate"
+                                    Value="{StaticResource ContentTemplate}"/>
+                            </DataTrigger>
+                        </DataTemplate.Triggers>
+                    </DataTemplate>
+
+                    <DataTemplate x:Key="GroupingTemplate">
                         <StackPanel HorizontalAlignment="Stretch">
                             <TextBlock Text="{Binding Title}" FontSize="20" HorizontalAlignment="Center" />
                             <ItemsControl ItemsSource="{Binding Parts}" />
                         </StackPanel>
                     </DataTemplate>
 
-                    <DataTemplate DataType="{x:Type models:Core+Content}">
+                    <DataTemplate x:Key="ContentTemplate">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="{Binding WordCount}" FontSize="15" HorizontalAlignment="Center" />
                             <CheckBox Checked="{Binding IsPartOfStory}" HorizontalAlignment="Center" />
@@ -36,6 +51,7 @@
             <ScrollViewer HorizontalScrollBarVisibility="Auto">
                 <ItemsControl 
                     ItemsSource="{Binding Parts}" 
+                    ItemTemplate="{StaticResource PartTemplate}"
                     HorizontalAlignment="Stretch"
                     BorderThickness="0">
                 </ItemsControl>

@@ -22,6 +22,8 @@ let update message model =
         model, Cmd.none
      
 let rec private partBindings _ : Binding<Part, PartMessage> list = [
+    "IsContent" |> Binding.oneWay (function :? Content -> true | _ -> false)
+
     // Grouping bindings
     "Title" |> Binding.oneWay (function :? Grouping as m -> m.title | _ -> "") // hardcore point notation ftw
     "Parts" |> Binding.subModelSeq(
