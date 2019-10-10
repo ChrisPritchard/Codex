@@ -69,25 +69,25 @@ let testNovel = {
                     {
                         title = "Chapter 7"
                         parts = [
-                            { wordCount = 20; xamlContent = "" }
-                            { wordCount = 20; xamlContent = "" }
-                            { wordCount = 20; xamlContent = "" }
+                            { wordCount = 20; xamlContent = ""; isPartOfStory = true }
+                            { wordCount = 20; xamlContent = ""; isPartOfStory = true }
+                            { wordCount = 20; xamlContent = ""; isPartOfStory = true }
                         ]
                     }
                     {
                         title = "Chapter 8"
                         parts = [
-                            { wordCount = 20; xamlContent = "" }
-                            { wordCount = 20; xamlContent = "" }
-                            { wordCount = 20; xamlContent = "" }
+                            { wordCount = 20; xamlContent = ""; isPartOfStory = true }
+                            { wordCount = 20; xamlContent = ""; isPartOfStory = true }
+                            { wordCount = 20; xamlContent = ""; isPartOfStory = true }
                         ]
                     }
                     {
                         title = "Chapter 9"
                         parts = [
-                            { wordCount = 20; xamlContent = "" }
-                            { wordCount = 20; xamlContent = "" }
-                            { wordCount = 20; xamlContent = "" }
+                            { wordCount = 20; xamlContent = ""; isPartOfStory = true }
+                            { wordCount = 20; xamlContent = ""; isPartOfStory = true }
+                            { wordCount = 20; xamlContent = ""; isPartOfStory = true }
                         ]
                     }
                 ]
