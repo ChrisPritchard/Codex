@@ -12,39 +12,34 @@
                 <ResourceDictionary Source="SharedStyles.xaml" />
                 <ResourceDictionary>
                     <DataTemplate x:Key="SceneTemplate">
-                        <Border BorderThickness="2" BorderBrush="Blue">
-                            <StackPanel>
-                                <TextBlock Text="{Binding WordCount}" />
-                            </StackPanel>
-                        </Border>
+                        <Grid HorizontalAlignment="Center">
+                            <TextBlock Text="{Binding WordCount}" FontSize="10" HorizontalAlignment="Center" />
+                        </Grid>
                     </DataTemplate>
 
-                    <HierarchicalDataTemplate x:Key="ChapterTemplate" ItemsSource="{Binding Scenes}" ItemTemplate="{StaticResource SceneTemplate}">
-                        <Border BorderThickness="2" BorderBrush="Green">
-                            <StackPanel>
-                                <TextBlock Text="{Binding Title}" />
-                            </StackPanel>
-                        </Border>
-                    </HierarchicalDataTemplate>
+                    <DataTemplate x:Key="ChapterTemplate">
+                        <StackPanel HorizontalAlignment="Stretch">
+                            <TextBlock Text="{Binding Title}" FontSize="15" HorizontalAlignment="Center" />
+                            <ItemsControl ItemsSource="{Binding Scenes}" ItemTemplate="{StaticResource SceneTemplate}" />
+                        </StackPanel>
+                    </DataTemplate>
 
-                    <HierarchicalDataTemplate x:Key="ActTemplate" ItemsSource="{Binding Chapters}" ItemTemplate="{StaticResource ChapterTemplate}">
-                        <Border BorderThickness="2" BorderBrush="Red">
-                            <StackPanel>
-                                <TextBlock Text="{Binding Title}" />
-                            </StackPanel>
-                        </Border>
-                    </HierarchicalDataTemplate>
+                    <DataTemplate x:Key="ActTemplate">
+                        <StackPanel HorizontalAlignment="Stretch">
+                            <TextBlock Text="{Binding Title}" FontSize="20" HorizontalAlignment="Center" />
+                            <ItemsControl ItemsSource="{Binding Chapters}" ItemTemplate="{StaticResource ChapterTemplate}" />
+                        </StackPanel>
+                    </DataTemplate>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
-        <TreeView ItemsSource="{Binding Acts}" ItemTemplate="{StaticResource ActTemplate}">
-            <TreeView.ItemContainerStyle>
-                <Style TargetType="{x:Type TreeViewItem}">
-                    <Setter Property="IsExpanded" Value="True"/>
-                </Style>
-            </TreeView.ItemContainerStyle>
-        </TreeView>
+        <ItemsControl 
+            ItemsSource="{Binding Acts}" 
+            ItemTemplate="{StaticResource ActTemplate}" 
+            HorizontalAlignment="Stretch"
+            BorderThickness="0">
+        </ItemsControl>
     </Grid>
 </Window>
