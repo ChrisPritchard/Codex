@@ -13,14 +13,14 @@ module Core =
     type Content = {
             wordCount: int
             xamlContent: string
-            partOfStory: bool
+            isPartOfStory: bool
         }
         with interface Part
 
-    let test = {
-            title = "test"
-            parts = [
-                { title = "test2"; parts = [] }
-                { wordCount = 0; xamlContent = ""; partOfStory = true }
-            ]
-        }
+    //let test = {
+    //        title = "test"
+    //        parts = [
+    //            { title = "test2"; parts = [] }
+    //            { wordCount = 0; xamlContent = ""; isPartOfStory = true }
+    //        ]
+    //    }

@@ -3,45 +3,43 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Codex.Views"
+        xmlns:models="clr-namespace:Codex.Model;assembly=Codex.Model"
         mc:Ignorable="d"
-        Title="TableOfContents" Height="450" Width="800">
+        Title="TableOfContents" Height="800" Width="450">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="SharedStyles.xaml" />
                 <ResourceDictionary>
-                    <DataTemplate x:Key="SceneTemplate">
-                        <Grid HorizontalAlignment="Center">
-                            <TextBlock Text="{Binding WordCount}" FontSize="10" HorizontalAlignment="Center" />
-                        </Grid>
-                    </DataTemplate>
 
-                    <DataTemplate x:Key="ChapterTemplate">
-                        <StackPanel HorizontalAlignment="Stretch">
-                            <TextBlock Text="{Binding Title}" FontSize="15" HorizontalAlignment="Center" />
-                            <ItemsControl ItemsSource="{Binding Scenes}" ItemTemplate="{StaticResource SceneTemplate}" />
-                        </StackPanel>
-                    </DataTemplate>
-
-                    <DataTemplate x:Key="ActTemplate">
+                    <DataTemplate DataType="{x:Type models:Core+Grouping}">
                         <StackPanel HorizontalAlignment="Stretch">
                             <TextBlock Text="{Binding Title}" FontSize="20" HorizontalAlignment="Center" />
-                            <ItemsControl ItemsSource="{Binding Chapters}" ItemTemplate="{StaticResource ChapterTemplate}" />
+                            <ItemsControl ItemsSource="{Binding Parts}" />
                         </StackPanel>
                     </DataTemplate>
+
+                    <DataTemplate DataType="{x:Type models:Core+Content}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding WordCount}" FontSize="15" HorizontalAlignment="Center" />
+                            <CheckBox Checked="{Binding IsPartOfStory}" HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </DataTemplate>
+                    
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
-        <ScrollViewer HorizontalScrollBarVisibility="Auto">
-            <ItemsControl 
-                ItemsSource="{Binding Acts}" 
-                ItemTemplate="{StaticResource ActTemplate}" 
-                HorizontalAlignment="Stretch"
-                BorderThickness="0">
-            </ItemsControl>
-        </ScrollViewer>
+        <StackPanel>
+            <TextBlock HorizontalAlignment="Center" Text="{Binding Title}" FontSize="30" />
+            <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                <ItemsControl 
+                    ItemsSource="{Binding Parts}" 
+                    HorizontalAlignment="Stretch"
+                    BorderThickness="0">
+                </ItemsControl>
+            </ScrollViewer>
+        </StackPanel>
     </Grid>
 </Window>

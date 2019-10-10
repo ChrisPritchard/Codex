@@ -1,74 +1,74 @@
 ﻿module TestNovel
 
-open Core
+open Codex.Model.Core
 
 let testNovel = {
         title = "My Test Novel"
-        acts = [
+        parts = [
             {
                 title = "Act 1"
-                chapters = [
+                parts = [
                     {
                         title = "Chapter 1"
-                        scenes = [
-                            { wordCount = 20; xamlContent = "" }
-                            { wordCount = 20; xamlContent = "" }
-                            { wordCount = 20; xamlContent = "" }
+                        parts = [
+                            { wordCount = 20; xamlContent = ""; isPartOfStory = true }
+                            { wordCount = 20; xamlContent = ""; isPartOfStory = true }
+                            { wordCount = 20; xamlContent = ""; isPartOfStory = true }
                         ]
                     }
                     {
                         title = "Chapter 2"
-                        scenes = [
-                            { wordCount = 20; xamlContent = "" }
-                            { wordCount = 20; xamlContent = "" }
-                            { wordCount = 20; xamlContent = "" }
+                        parts = [
+                            { wordCount = 20; xamlContent = ""; isPartOfStory = true }
+                            { wordCount = 20; xamlContent = ""; isPartOfStory = true }
+                            { wordCount = 20; xamlContent = ""; isPartOfStory = true }
                         ]
                     }
                     {
                         title = "Chapter 3"
-                        scenes = [
-                            { wordCount = 20; xamlContent = "" }
-                            { wordCount = 20; xamlContent = "" }
-                            { wordCount = 20; xamlContent = "" }
+                        parts = [
+                            { wordCount = 20; xamlContent = ""; isPartOfStory = true }
+                            { wordCount = 20; xamlContent = ""; isPartOfStory = true }
+                            { wordCount = 20; xamlContent = ""; isPartOfStory = true }
                         ]
                     }
                 ]
             }
             {
                 title = "Act 2"
-                chapters = [
+                parts = [
                     {
                         title = "Chapter 4"
-                        scenes = [
-                            { wordCount = 20; xamlContent = "" }
-                            { wordCount = 20; xamlContent = "" }
-                            { wordCount = 20; xamlContent = "" }
+                        parts = [
+                            { wordCount = 20; xamlContent = ""; isPartOfStory = true }
+                            { wordCount = 20; xamlContent = ""; isPartOfStory = true }
+                            { wordCount = 20; xamlContent = ""; isPartOfStory = true }
                         ]
                     }
                     {
                         title = "Chapter 5"
-                        scenes = [
-                            { wordCount = 20; xamlContent = "" }
-                            { wordCount = 20; xamlContent = "" }
-                            { wordCount = 20; xamlContent = "" }
+                        parts = [
+                            { wordCount = 20; xamlContent = ""; isPartOfStory = true }
+                            { wordCount = 20; xamlContent = ""; isPartOfStory = true }
+                            { wordCount = 20; xamlContent = ""; isPartOfStory = true }
                         ]
                     }
                     {
                         title = "Chapter 6"
-                        scenes = [
-                            { wordCount = 20; xamlContent = "" }
-                            { wordCount = 20; xamlContent = "" }
-                            { wordCount = 20; xamlContent = "" }
+                        parts = [
+                            { wordCount = 20; xamlContent = ""; isPartOfStory = true }
+                            { wordCount = 20; xamlContent = ""; isPartOfStory = true }
+                            { wordCount = 20; xamlContent = ""; isPartOfStory = true }
                         ]
                     }
                 ]
             }
             {
                 title = "Act 3"
-                chapters = [
+                parts = [
                     {
                         title = "Chapter 7"
-                        scenes = [
+                        parts = [
                             { wordCount = 20; xamlContent = "" }
                             { wordCount = 20; xamlContent = "" }
                             { wordCount = 20; xamlContent = "" }
@@ -76,7 +76,7 @@ let testNovel = {
                     }
                     {
                         title = "Chapter 8"
-                        scenes = [
+                        parts = [
                             { wordCount = 20; xamlContent = "" }
                             { wordCount = 20; xamlContent = "" }
                             { wordCount = 20; xamlContent = "" }
@@ -84,7 +84,7 @@ let testNovel = {
                     }
                     {
                         title = "Chapter 9"
-                        scenes = [
+                        parts = [
                             { wordCount = 20; xamlContent = "" }
                             { wordCount = 20; xamlContent = "" }
                             { wordCount = 20; xamlContent = "" }

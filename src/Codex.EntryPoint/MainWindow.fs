@@ -7,14 +7,13 @@ open System.Windows
 open System.IO
 open System.Xml.Serialization
 open Microsoft.Win32
-
-open Core
+open Codex.Model.Core
 
 let fileFilter = "RTF (*.rtf)|*.rtf|Plain Text (*.txt)|*.txt|XAML Pack (*.xaml)|*.xaml"
 
 type CodexModel = {
     sceneEditor: SceneEditor.Model option
-    tableOfContents: Core.Novel option
+    tableOfContents: Codex.Model.Core.Grouping option
 }
 
 type Message = 
@@ -48,7 +47,7 @@ let saveFile fileName =
     )
 
 let saveCurrentModel model fileName =
-    let serialiser = new XmlSerializer (typeof<Novel>)
+    let serialiser = new XmlSerializer (typeof<Grouping>)
     use stream = File.Create fileName
     serialiser.Serialize(stream, model) // TODO save xaml text content
     ()
