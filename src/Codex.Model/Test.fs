@@ -2,17 +2,25 @@
 
 module Core =
 
-    type Part = 
-        abstract member title: string
+    type Part = interface end
 
-    type Grouping(title) = 
-        interface Part with 
-            member _.title = title
-        member _.Parts: Part list = []
+    type Grouping = {
+        title: string
+        parts: Part list
+        }
+        with interface Part
 
-    type Content(title) = 
-        interface Part with 
-            member _.title = title
-        member _.wordCount: int = 0
-        member _.xamlContent: string = ""
-        member _.partOfStory: bool = false
+    type Content = {
+            wordCount: int
+            xamlContent: string
+            partOfStory: bool
+        }
+        with interface Part
+
+    let test = {
+            title = "test"
+            parts = [
+                { title = "test2"; parts = [] }
+                { wordCount = 0; xamlContent = ""; partOfStory = true }
+            ]
+        }
