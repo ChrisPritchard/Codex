@@ -35,11 +35,13 @@
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
-        <ItemsControl 
-            ItemsSource="{Binding Acts}" 
-            ItemTemplate="{StaticResource ActTemplate}" 
-            HorizontalAlignment="Stretch"
-            BorderThickness="0">
-        </ItemsControl>
+        <ScrollViewer HorizontalScrollBarVisibility="Auto">
+            <ItemsControl 
+                ItemsSource="{Binding Acts}" 
+                ItemTemplate="{StaticResource ActTemplate}" 
+                HorizontalAlignment="Stretch"
+                BorderThickness="0">
+            </ItemsControl>
+        </ScrollViewer>
     </Grid>
 </Window>
