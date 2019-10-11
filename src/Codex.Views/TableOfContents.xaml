@@ -15,14 +15,14 @@
                     <DataTemplate x:Key="PartContentTemplate">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="{Binding WordCount}" FontSize="15" HorizontalAlignment="Center" />
-                            <CheckBox Checked="{Binding IsPartOfStory}" HorizontalAlignment="Center" />
+                            <CheckBox Command="{Binding IsPartOfStory}" HorizontalAlignment="Center" />
                         </StackPanel>
                     </DataTemplate>
 
                     <DataTemplate x:Key="PartGroupingTemplate">
                         <StackPanel HorizontalAlignment="Stretch">
                             <TextBlock Text="{Binding Title}" FontSize="20" HorizontalAlignment="Center" />
-                            <!--<ItemsControl ItemsSource="{Binding Parts}" ItemTemplate="{StaticResource PartTemplate}" />-->
+                            <ItemsControl ItemsSource="{Binding Parts}" ItemTemplate="{DynamicResource PartTemplate}" />
                         </StackPanel>
                     </DataTemplate>
 
