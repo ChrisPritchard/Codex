@@ -1,18 +1,18 @@
-﻿module Core
+﻿namespace Codex.Model
 
-type [<CLIMutable>]Novel = {
-    title: string
-    acts: Act list
-    }
-and [<CLIMutable>]Act = {
-    title: string
-    chapters: Chapter list
-    }
-and [<CLIMutable>]Chapter = {
-    title: string
-    scenes: Scene list
-    }
-and [<CLIMutable>]Scene = {
-    wordCount: int
-    xamlContent: string
-    }
+module Core =
+
+    type Part =
+    | Grouping of Grouping
+    | Content of Content
+
+    and Grouping = {
+        title: string
+        parts: Part list
+        }
+
+    and Content = {
+        wordCount: int
+        xamlContent: string
+        isPartOfStory: bool
+        }

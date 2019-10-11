@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:models="clr-namespace:Codex.Model;assembly=Codex.Model"
         mc:Ignorable="d"
-        Title="TableOfContents" Height="800" Width="450">
+        Title="TableOfContents" Height="450" Width="450">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -46,16 +46,15 @@
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
-        <StackPanel>
-            <TextBlock HorizontalAlignment="Center" Text="{Binding Title}" FontSize="30" />
-            <ScrollViewer HorizontalScrollBarVisibility="Auto">
+        <ScrollViewer HorizontalScrollBarVisibility="Auto">
+            <StackPanel>
+                <TextBlock HorizontalAlignment="Center" Text="{Binding Title}" FontSize="30" />
                 <ItemsControl 
                     ItemsSource="{Binding Parts}" 
                     ItemTemplate="{StaticResource PartTemplate}"
                     HorizontalAlignment="Stretch"
-                    BorderThickness="0">
-                </ItemsControl>
-            </ScrollViewer>
-        </StackPanel>
+                    BorderThickness="0" />
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Window>

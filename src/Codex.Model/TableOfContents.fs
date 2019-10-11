@@ -22,20 +22,20 @@ let update message model =
         model, Cmd.none
      
 let rec private partBindings _ : Binding<Part, PartMessage> list = [
-    "IsContent" |> Binding.oneWay (function :? Content -> true | _ -> false)
+    "IsContent" |> Binding.oneWay (function Content _ -> true | _ -> false)
 
     // Grouping bindings
-    "Title" |> Binding.oneWay (function :? Grouping as m -> m.title | _ -> "") // hardcore point notation ftw
+    "Title" |> Binding.oneWay (function Grouping m -> m.title | _ -> "")
     "Parts" |> Binding.subModelSeq(
-         (function :? Grouping as m -> m.parts | _ -> []),
+         (function Grouping m -> m.parts | _ -> []),
          snd,
          id,
          ChildMessage,
          partBindings)
 
     // Content bindings
-    "WordCount" |> Binding.oneWay (function :? Content as m -> m.wordCount | _ -> 0)
-    "IsPartOfStory" |> Binding.twoWay ((fun (p: Part) -> match p with :? Content as m -> m.isPartOfStory | _ -> false), SetIsPartOfStory)
+    "WordCount" |> Binding.oneWay (function Content m -> m.wordCount | _ -> 0)
+    "IsPartOfStory" |> Binding.twoWay ((fun (p: Part) -> match p with Content m -> m.isPartOfStory | _ -> false), SetIsPartOfStory)
     ]
 
 let bindings _ : Binding<Grouping, Message> list = [
