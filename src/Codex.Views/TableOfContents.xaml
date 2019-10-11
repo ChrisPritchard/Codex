@@ -12,33 +12,33 @@
                 <ResourceDictionary Source="SharedStyles.xaml" />
                 <ResourceDictionary>
 
+                    <DataTemplate x:Key="PartContentTemplate">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding WordCount}" FontSize="15" HorizontalAlignment="Center" />
+                            <CheckBox Checked="{Binding IsPartOfStory}" HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </DataTemplate>
+
+                    <DataTemplate x:Key="PartGroupingTemplate">
+                        <StackPanel HorizontalAlignment="Stretch">
+                            <TextBlock Text="{Binding Title}" FontSize="20" HorizontalAlignment="Center" />
+                            <!--<ItemsControl ItemsSource="{Binding Parts}" ItemTemplate="{StaticResource PartTemplate}" />-->
+                        </StackPanel>
+                    </DataTemplate>
+
                     <DataTemplate x:Key="PartTemplate">
                         <ContentPresenter 
                                 x:Name="PartPresenter"
-                                  ContentTemplate="{StaticResource GroupingTemplate}" />
+                                  ContentTemplate="{StaticResource PartGroupingTemplate}" />
                         <DataTemplate.Triggers>
                             <DataTrigger 
                                     Binding="{Binding IsContent}"
                                     Value="true">
                                 <Setter TargetName="PartPresenter"
                                     Property="ContentTemplate"
-                                    Value="{StaticResource ContentTemplate}"/>
+                                    Value="{StaticResource PartContentTemplate}"/>
                             </DataTrigger>
                         </DataTemplate.Triggers>
-                    </DataTemplate>
-
-                    <DataTemplate x:Key="GroupingTemplate">
-                        <StackPanel HorizontalAlignment="Stretch">
-                            <TextBlock Text="{Binding Title}" FontSize="20" HorizontalAlignment="Center" />
-                            <ItemsControl ItemsSource="{Binding Parts}" />
-                        </StackPanel>
-                    </DataTemplate>
-
-                    <DataTemplate x:Key="ContentTemplate">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding WordCount}" FontSize="15" HorizontalAlignment="Center" />
-                            <CheckBox Checked="{Binding IsPartOfStory}" HorizontalAlignment="Center" />
-                        </StackPanel>
                     </DataTemplate>
                     
                 </ResourceDictionary>
