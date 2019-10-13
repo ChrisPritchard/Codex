@@ -3,10 +3,13 @@
 open Elmish
 open Elmish.WPF
 open Codex.Model.Core
+open System.Windows
+open Microsoft.Win32
 
 type Message =
     | CloseTableOfContents
     | PartMessage of id: Part * message: PartMessage
+    | Test1 of string
 and PartMessage =
     // grouping messages
     | AddGrouping
@@ -15,8 +18,19 @@ and PartMessage =
     // content messages
     | SetIsPartOfStory of bool
 
+let saveFile fileName =
+    Application.Current.Dispatcher.Invoke(fun () ->
+        let dialog = SaveFileDialog (Filter = "", FileName = fileName)
+        let result = dialog.ShowDialog ()
+        if result.HasValue && result.Value
+            then Test1 dialog.FileName
+            else Test1 ""
+    )
+
 let update message model =
     match message with
+    | CloseTableOfContents ->
+        model, Cmd.OfFunc.perform saveFile "" id
     | _ ->
         // messages not covered above are probably used by parent windows (e.g. main for close)
         model, Cmd.none

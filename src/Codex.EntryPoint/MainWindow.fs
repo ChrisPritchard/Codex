@@ -73,12 +73,12 @@ let update message model =
     | ShowTableOfContents, _, None ->
         { model with 
             tableOfContents = Some TestNovel.testNovel }, Cmd.none
-    | TableOfContentsMessage TableOfContents.CloseTableOfContents, _, Some _ ->
-        { model with tableOfContents = None }, Cmd.none
+    //| TableOfContentsMessage TableOfContents.CloseTableOfContents, _, Some _ ->
+    //    { model with tableOfContents = None }, Cmd.none
     // no other messages on this window at this time
-    //| TableOfContentsMessage m, _, Some subWindow -> 
-    //    let subWindow, subMessage = TableOfContents.update m subWindow
-    //    { model with tableOfContents = Some subWindow }, Cmd.map TableOfContentsMessage subMessage
+    | TableOfContentsMessage m, _, Some subWindow -> 
+        let subWindow, subMessage = TableOfContents.update m subWindow
+        { model with tableOfContents = Some subWindow }, Cmd.map TableOfContentsMessage subMessage
 
     | _ ->
         // invalid command, model combo
