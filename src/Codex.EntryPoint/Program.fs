@@ -14,4 +14,5 @@ let init _ =
 let main _ =
   Program.mkProgramWpf init MainWindow.update MainWindow.bindings
   |> Program.withConsoleTrace
-  |> Program.runWindowWithConfig { ElmConfig.Default with LogConsole = true } (Codex.Views.MainWindow ())
+  |> Program.withDebugTrace
+  |> Program.runWindowWithConfig ElmConfig.Default (Codex.Views.MainWindow ())
