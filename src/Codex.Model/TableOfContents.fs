@@ -8,13 +8,13 @@ open Microsoft.Win32
 
 type Message =
     | CloseTableOfContents
-    | PartMessage of id: Part * message: PartMessage
+    | PartMessage of id: string * message: PartMessage
     | Test1 of string
 and PartMessage =
     // grouping messages
     | AddGrouping
     | AddContent
-    | ChildMessage of id: Part * message: PartMessage
+    | ChildMessage of id: string * message: PartMessage
     // content messages
     | SetIsPartOfStory of bool
 
@@ -34,6 +34,8 @@ let update message model =
     | _ ->
         // messages not covered above are probably used by parent windows (e.g. main for close)
         model, Cmd.none
+
+let getIdForParts = function Grouping g -> g.title | Content c -> c.title
      
 let rec private partBindings _ : Binding<Part, PartMessage> list = [
     "IsContent" |> Binding.oneWay (function Content _ -> true | _ -> false)
@@ -43,7 +45,7 @@ let rec private partBindings _ : Binding<Part, PartMessage> list = [
     "Parts" |> Binding.subModelSeq(
          (function Grouping m -> m.parts | _ -> []),
          snd,
-         id,
+         getIdForParts,
          ChildMessage,
          partBindings)
 
@@ -58,7 +60,7 @@ let bindings _ : Binding<Grouping, Message> list = [
         "Parts" |> Binding.subModelSeq(
             (fun m -> m.parts),
             snd,
-            id,
+            getIdForParts,
             PartMessage,
             partBindings)
     ]

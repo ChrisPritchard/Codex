@@ -12,6 +12,7 @@ module Core =
         }
 
     and Content = {
+        title: string
         wordCount: int
         xamlContent: string
         isPartOfStory: bool
