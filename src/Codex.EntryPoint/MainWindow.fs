@@ -39,15 +39,11 @@ let openFile fileName =
 
 let saveFile fileName =
     Application.Current.Dispatcher.Invoke(fun () ->
-        let guiCtx = System.Threading.SynchronizationContext.Current
-        async {
-            do! Async.SwitchToContext guiCtx
-            let dialog = SaveFileDialog (Filter = fileFilter, FileName = fileName)
-            let result = dialog.ShowDialog ()
-            if result.HasValue && result.Value
-                then return (SaveFileSelected dialog.FileName)
-                else return FileSelectCanceled
-        }
+        let dialog = SaveFileDialog (Filter = fileFilter, FileName = fileName)
+        let result = dialog.ShowDialog ()
+        if result.HasValue && result.Value
+            then SaveFileSelected dialog.FileName
+            else FileSelectCanceled
     )
 
 let saveCurrentModel model fileName =
@@ -61,7 +57,7 @@ let update message model =
     | LoadNovel, _, _ -> 
         model, Cmd.OfFunc.perform openFile "" id // TODO set filename
     | SaveNovel, _, _ -> 
-        model, Cmd.OfAsyncImmediate.perform saveFile "" id // TODO set filename
+        model, Cmd.OfFunc.perform saveFile "" id // TODO set filename
     | SaveFileSelected fileName, _, Some subWindow ->
         saveCurrentModel subWindow fileName
         model, Cmd.none

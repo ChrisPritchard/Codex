@@ -6,12 +6,12 @@ module Core =
     | Grouping of Grouping
     | Content of Content
 
-    and Grouping = {
+    and [<CLIMutable>]Grouping = {
         title: string
         parts: Part list
         }
 
-    and Content = {
+    and [<CLIMutable>]Content = {
         title: string
         wordCount: int
         xamlContent: string
