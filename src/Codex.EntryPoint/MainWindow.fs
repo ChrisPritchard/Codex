@@ -2,10 +2,9 @@
 
 open Elmish
 open Elmish.WPF
-
 open System.Windows
 open System.IO
-open System.Xml.Serialization
+open System.Xml.Linq
 open Microsoft.Win32
 open Codex.Model.Core
 
@@ -48,9 +47,17 @@ let saveFile filter fileName =
     )
 
 let saveCurrentModel model fileName =
-    let serialiser = new XmlSerializer (typeof<Grouping>)
+    let rec xmlForPart p =
+        match p with
+        | Grouping g ->
+            let childrenXml = g.parts |> List.map xmlForPart |> String.concat ""
+            sprintf "<grouping title=\"%s\">%s</grouping>" g.title childrenXml
+        | Content c ->
+            sprintf "<content title=\"%s\" isPartOfStory=\"%b\" wordCount=\"%i\"><![CDATA[%s]]></content>" 
+                c.title c.isPartOfStory c.wordCount c.xamlContent
+    let xml = XDocument.Parse(xmlForPart model)
     use stream = File.Create fileName
-    serialiser.Serialize(stream, model) // TODO save xaml text content
+    xml.Save stream
     ()
 
 let update message model =
@@ -60,7 +67,7 @@ let update message model =
     | SaveNovel, _, _ -> 
         model, Cmd.OfFunc.perform (saveFile projectFileFilter) "" id // TODO set filename
     | SaveFileSelected fileName, _, Some subWindow ->
-        saveCurrentModel subWindow fileName
+        saveCurrentModel (Grouping subWindow) fileName
         model, Cmd.none
 
     | ShowSceneEditor, None, _ ->
