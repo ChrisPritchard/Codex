@@ -2,6 +2,7 @@
 
 open Elmish
 open Elmish.WPF
+open System
 open System.Windows
 open System.IO
 open System.Xml.Linq
@@ -60,6 +61,14 @@ let saveCurrentModel model fileName =
     xml.Save stream
     ()
 
+let loadSavedModel fileName =
+    try
+        let model = { title = ""; parts = [] }
+        Ok model
+    with
+    | ex ->
+        Error ex.Message
+
 let update message model =
     match message, model.sceneEditor, model.tableOfContents with
     | LoadNovel, _, _ -> 
@@ -69,6 +78,13 @@ let update message model =
     | SaveFileSelected fileName, _, Some subWindow ->
         saveCurrentModel (Grouping subWindow) fileName
         model, Cmd.none
+    | LoadFileSelected fileName, _, _->
+        match loadSavedModel fileName with
+        | Ok g ->
+            { model with tableOfContents = Some g }, Cmd.none
+        | Error s ->
+            MessageBox.Show (sprintf "Loading an existing project failed with error %s" s) |> ignore
+            model, Cmd.none
 
     | ShowSceneEditor, None, _ ->
         { model with sceneEditor = Some { title = "Current Scene"; xamlContent = ""; wordCount = 0 } }, Cmd.none
