@@ -63,8 +63,32 @@ let saveCurrentModel model fileName =
 
 let loadSavedModel fileName =
     try
-        let model = { title = ""; parts = [] }
-        Ok model
+        use stream = File.OpenRead fileName
+        let doc = XDocument.Load stream
+
+        let rec parser (node: XElement) = 
+            match node.Name.LocalName with 
+            | "grouping" ->
+                let children = node.Elements () |> Seq.map parser |> Seq.toList
+                Grouping { 
+                    title = node.Attribute(XName.Get("title")).Value
+                    parts = children 
+                }
+            | "content" ->
+                Content { 
+                    title = node.Attribute(XName.Get("title")).Value
+                    isPartOfStory = bool.Parse (node.Attribute(XName.Get("isPartOfStory")).Value)
+                    wordCount = Int32.Parse (node.Attribute(XName.Get("wordCount")).Value)
+                    xamlContent = node.Value
+                }
+            | _ -> failwith "invalid xml encountered while parsing codex document"
+
+        let model = parser doc.Root
+        match model with
+        | Grouping g ->
+            Ok g
+        | Content _ ->
+            Error "invalid xml structure"
     with
     | ex ->
         Error ex.Message
