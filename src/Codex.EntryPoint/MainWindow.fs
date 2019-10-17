@@ -9,7 +9,8 @@ open System.Xml.Serialization
 open Microsoft.Win32
 open Codex.Model.Core
 
-let fileFilter = "RTF (*.rtf)|*.rtf|Plain Text (*.txt)|*.txt|XAML Pack (*.xaml)|*.xaml"
+let exportFileFilter = "RTF (*.rtf)|*.rtf|Plain Text (*.txt)|*.txt|XAML Pack (*.xaml)|*.xaml"
+let projectFileFilter = "Codex Project (*.cdxml)|*.cdxml";
 
 type CodexModel = {
     sceneEditor: SceneEditor.Model option
@@ -28,18 +29,18 @@ type Message =
     | ShowTableOfContents
     | TableOfContentsMessage of TableOfContents.Message
 
-let openFile fileName = 
+let openFile filter fileName = 
     Application.Current.Dispatcher.Invoke(fun () ->
-        let dialog = OpenFileDialog (Filter = fileFilter, FileName = fileName)
+        let dialog = OpenFileDialog (Filter = filter, FileName = fileName)
         let result = dialog.ShowDialog ()
         if result.HasValue && result.Value
             then LoadFileSelected dialog.FileName
             else FileSelectCanceled
     )
 
-let saveFile fileName =
+let saveFile filter fileName =
     Application.Current.Dispatcher.Invoke(fun () ->
-        let dialog = SaveFileDialog (Filter = fileFilter, FileName = fileName)
+        let dialog = SaveFileDialog (Filter = filter, FileName = fileName)
         let result = dialog.ShowDialog ()
         if result.HasValue && result.Value
             then SaveFileSelected dialog.FileName
@@ -55,9 +56,9 @@ let saveCurrentModel model fileName =
 let update message model =
     match message, model.sceneEditor, model.tableOfContents with
     | LoadNovel, _, _ -> 
-        model, Cmd.OfFunc.perform openFile "" id // TODO set filename
+        model, Cmd.OfFunc.perform (openFile projectFileFilter) "" id // TODO set filename
     | SaveNovel, _, _ -> 
-        model, Cmd.OfFunc.perform saveFile "" id // TODO set filename
+        model, Cmd.OfFunc.perform (saveFile projectFileFilter) "" id // TODO set filename
     | SaveFileSelected fileName, _, Some subWindow ->
         saveCurrentModel subWindow fileName
         model, Cmd.none
